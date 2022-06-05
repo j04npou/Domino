@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +71,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654425872517</updated>
-      <workItem from="1654425874404" duration="6911000" />
+      <workItem from="1654425874404" duration="8206000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -95,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654431447414</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Initialized tilePool">
+      <created>1654432859749</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654432859749</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,6 +111,7 @@
     <MESSAGE value="Initializated Tile object" />
     <MESSAGE value="Created initial object structure" />
     <MESSAGE value="Created structure to add players to their teams or individual game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created structure to add players to their teams or individual game" />
+    <MESSAGE value="Initialized tilePool" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initialized tilePool" />
   </component>
 </project>

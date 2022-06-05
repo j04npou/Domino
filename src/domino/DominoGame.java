@@ -1,6 +1,7 @@
 package domino;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 interface DominoGameInterface {
     boolean canBeTheFirstPlayer(Player player);
@@ -82,11 +83,6 @@ public abstract class DominoGame implements DominoGameInterface {
         }
     }
 
-    public void gameplay() {
-        initTilePool();
-        showTiles(tilePool,false);
-    }
-
     public void showTiles(ArrayList<Tile> array, boolean hidden){
         for (int i = 0; i < array.size(); i++) {
             if (hidden)
@@ -95,5 +91,31 @@ public abstract class DominoGame implements DominoGameInterface {
                 System.out.print(tilesV[array.get(i).getTileDotsLeft()][array.get(i).getTileDotsRight()] + " ");
         }
         System.out.println();
+    }
+
+    private void dealTiles() {
+        for (int i = 0; i < players.size(); i++) {
+            getRandomTiles(players.get(i));
+        }
+    }
+
+    private void getRandomTiles(Player player) {
+        Random rand = new Random();
+        for (int i = 0; i < 7; i++) {
+            int int_random = rand.nextInt(tilePool.size());
+            player.playerTiles.add(tilePool.get(int_random));
+            tilePool.remove(int_random);
+        }
+    }
+
+    public void gameplay() {
+        initTilePool();
+        dealTiles();
+        showTiles(tilePool,false);
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println("Player " + players.get(i).playerNumber);
+            System.out.println("Team " + players.get(i).playerTeam);
+            showTiles(players.get(i).playerTiles,false);
+        }
     }
 }
