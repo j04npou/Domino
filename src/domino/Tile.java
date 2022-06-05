@@ -4,9 +4,9 @@ public class Tile {
     private int tileDotsLeft;
     private int tileDotsRight;
 
-    public Tile(int tileDotsLeft, int tileDotsRigth, boolean isLeft) {
+    public Tile(int tileDotsLeft, int tileDotsRight) {
         this.setTileDotsLeft(tileDotsLeft);
-        this.setTileDotsRight(tileDotsRigth);
+        this.setTileDotsRight(tileDotsRight);
     }
 
     public int getTileDotsLeft() {

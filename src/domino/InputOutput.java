@@ -8,7 +8,7 @@ public class InputOutput {
         System.out.println(validValues);
         System.out.println("0: Cancel·lar partida. Introdueix moviment: ");
         validValues = validValues.concat("0");
-        String s = "";
+        String s;
         do {
             s = in.nextLine();
         } while ( s.length() != 1 || s.equals(" ") || !validValues.contains(s) );
@@ -19,7 +19,7 @@ public class InputOutput {
         Scanner in = new Scanner(System.in);
         System.out.println("Introdueix moviment: 'L' o 'R'");
         String validValues = "LRlr";
-        String s = "";
+        String s;
         do {
             s = in.nextLine();
         } while (s.length() != 1 || !validValues.contains(s));

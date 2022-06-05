@@ -52,7 +52,7 @@ public abstract class DominoGame implements DominoGameInterface {
         this.tilesPlayed = new ArrayList<>();
         this.players = new ArrayList<>();
 
-        // Cream els equis/jugadors
+        // Cream els equips/jugadors
         initPlayers(numberOfPlayers, isTeamGame);
     }
 
@@ -80,7 +80,7 @@ public abstract class DominoGame implements DominoGameInterface {
         // Cream totes les fitxes i les posam al munt
         for (int x = 0; x <= 6; x++) {
             for (int y = 0; y <= x; y++) {
-                tilePool.add(new Tile(x,y,false));
+                tilePool.add(new Tile(x,y));
             }
         }
     }
@@ -185,16 +185,14 @@ public abstract class DominoGame implements DominoGameInterface {
     private boolean checkIsLeftMove(Tile tile) {
         boolean leftPossible=false;
         boolean rightPossible=false;
-        boolean bothPossible=false;
         if ( tile.getTileDotsLeft() == chainLeftNumber || tile.getTileDotsRight() == chainLeftNumber )
             leftPossible = true;
         if ( tile.getTileDotsLeft() == chainRightNumber || tile.getTileDotsRight() == chainRightNumber )
             rightPossible = true;
-        String response="";
+        String response;
         if (leftPossible && rightPossible && chainLeftNumber != chainRightNumber) {
-            bothPossible=true;
             response = InputOutput.askLeftOrRight();
-            if (response == "L") {
+            if (response.equals("L")) {
                 if ( tile.getTileDotsRight() != chainLeftNumber )
                     swapTileDots(tile);
                 return true;
