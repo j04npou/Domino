@@ -37,7 +37,8 @@ public abstract class DominoGame implements DominoGameInterface {
     public ArrayList<Player> players;
     private int targetPoints;
     private boolean isTeamGame;
-    private int playerTurn;
+    public int playerTurn;
+    public int nextRoundTurn;
     private boolean firstEverTurn;
     private int playerPassCounter;
     private int chainLeftNumber;
@@ -134,6 +135,7 @@ public abstract class DominoGame implements DominoGameInterface {
             firstEverTurn = false;
             makeFirstEverMoveTurn();
         }
+        // FALTA COMPLETAR EL PRIMER MOVIMENT DE LES SEGUENTS PARTIDES
     }
 
     public boolean hasDouble(int doubleTile, ArrayList<Tile> playerTiles) {
@@ -214,12 +216,9 @@ public abstract class DominoGame implements DominoGameInterface {
     public void gameplay() {
         initTilePool();
         dealTiles();
+        firstMove();
         showTiles(tilePool,false);
-        for (int i = 0; i < players.size(); i++) {
-            System.out.println("Player " + players.get(i).playerNumber);
-            System.out.println("Team " + players.get(i).playerTeam);
-            showTiles(players.get(i).playerTiles,false);
-        }
         showTeams();
+        showTiles(tilesPlayed,false);
     }
 }

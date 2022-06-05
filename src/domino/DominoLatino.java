@@ -22,16 +22,16 @@ public class DominoLatino extends DominoGame {
 
         // cercam jugador amb doble 6
         for (int i = 1; i <= players.size() ; i++) {
-            Player tmpPlayer = players.get(i);
+            Player tmpPlayer = players.get(i-1);
             // Comprovam si aquest jugador compleix la condició d'esser el primer en jugar
             if ( hasDouble(6, tmpPlayer.playerTiles) ) {
                 // posam la fitxa en joc i la llevam del jugador
                 putTile(tmpPlayer, findPositionDouble(6, tmpPlayer.playerTiles));
                 // Guardam el torn d'aquesta partida per continuar rotant a les següents
-                nextRoundTurn = playerTurn;
                 playerTurn = i+1;
-                if ( playerTurn > 4 )
+                if ( playerTurn > players.size() )
                     playerTurn = 1;
+                nextRoundTurn = playerTurn;
                 break;
             }
         }
