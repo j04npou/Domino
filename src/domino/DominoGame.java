@@ -113,11 +113,16 @@ public abstract class DominoGame implements DominoGameInterface {
             for (int i = 1; i <= 2; i++) {
                 System.out.println("Team " + i + ":");
                 for (int j = 0; j < players.size(); j++) {
-                    if (players.get(j).playerTeam == i){
+                    if (players.get(j).playerTeam == i) {
                         System.out.print("\tPlayer " + players.get(j).playerNumber + " ");
-                        showTiles(players.get(j).playerTiles,true);
+                        showTiles(players.get(j).playerTiles, true);
                     }
                 }
+            }
+        } else {
+            for (int j = 0; j < players.size(); j++) {
+                System.out.print("Player " + players.get(j).playerNumber + " ");
+                showTiles(players.get(j).playerTiles, true);
             }
         }
     }

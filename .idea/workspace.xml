@@ -71,7 +71,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654425872517</updated>
-      <workItem from="1654425874404" duration="9347000" />
+      <workItem from="1654425874404" duration="9876000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -108,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654442712357</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Print teams, his players and reversed tiles">
+      <created>1654443809759</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1654443809759</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,6 +127,7 @@
     <MESSAGE value="Created structure to add players to their teams or individual game" />
     <MESSAGE value="Initialized tilePool" />
     <MESSAGE value="Deal tiles and verifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deal tiles and verifications" />
+    <MESSAGE value="Print teams, his players and reversed tiles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Print teams, his players and reversed tiles" />
   </component>
 </project>
