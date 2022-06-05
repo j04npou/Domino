@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 interface DominoGameInterface {
-    boolean canBeTheFirstPlayer(Player player);
     boolean checkTotalWin();
     int countPoints();
     void makeFirstEverMoveTurn();
@@ -35,12 +34,14 @@ interface DominoGameInterface {
 public abstract class DominoGame implements DominoGameInterface {
     private ArrayList<Tile> tilePool;
     private ArrayList<Tile> tilesPlayed;
-    private  ArrayList<Player> players;
+    public ArrayList<Player> players;
     private int targetPoints;
     private boolean isTeamGame;
     private int playerTurn;
     private boolean firstEverTurn;
     private int playerPassCounter;
+    private int chainLeftNumber;
+    private int chainRightNumber;
 
     public DominoGame(int numberOfPlayers, boolean isTeamGame, int targetPoints) {
         this.isTeamGame = isTeamGame;
@@ -125,6 +126,89 @@ public abstract class DominoGame implements DominoGameInterface {
                 showTiles(players.get(j).playerTiles, true);
             }
         }
+    }
+
+    private void firstMove() {
+        if (firstEverTurn) {
+            // Primer moviment de tot el joc
+            firstEverTurn = false;
+            makeFirstEverMoveTurn();
+        }
+    }
+
+    public boolean hasDouble(int doubleTile, ArrayList<Tile> playerTiles) {
+        for (int i = 0; i < playerTiles.size() ; i++) {
+            if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int findPositionDouble(int doubleTile, ArrayList<Tile> playerTiles) {
+        for (int i = 0; i < playerTiles.size() ; i++) {
+            if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void putTile(Player tmpPlayer, int playerTilePosition) {
+        // actualitzam extrems
+        if (tilesPlayed.size() == 1) {
+            // Primera fitxa colocada
+            chainLeftNumber = tilesPlayed.get(0).getTileDotsLeft();
+            chainRightNumber = tilesPlayed.get(0).getTileDotsRight();
+            // posam la fitxa al joc
+            tilesPlayed.add(tmpPlayer.playerTiles.get(playerTilePosition));
+        } else {
+            // posteriors fitxes
+            boolean isLeft = checkIsLeftMove(tmpPlayer.playerTiles.get(playerTilePosition));
+            if (!isLeft) {
+                chainRightNumber = tmpPlayer.playerTiles.get(playerTilePosition).getTileDotsRight();
+                // posam la fitxa al joc a la dreta
+                tilesPlayed.add(tmpPlayer.playerTiles.get(playerTilePosition));
+            } else {
+                chainLeftNumber = tmpPlayer.playerTiles.get(playerTilePosition).getTileDotsLeft();
+                // posam la fitxa al joc a l'esquerra
+                tilesPlayed.add(0,tmpPlayer.playerTiles.get(playerTilePosition));
+            }
+        }
+
+        // llevam la fitxa al jugador
+        tmpPlayer.playerTiles.remove(playerTilePosition);
+    }
+
+    private boolean checkIsLeftMove(Tile tile) {
+        boolean leftPossible=false;
+        boolean rightPossible=false;
+        boolean bothPossible=false;
+        if ( tile.getTileDotsLeft() == chainLeftNumber || tile.getTileDotsRight() == chainLeftNumber )
+            leftPossible = true;
+        if ( tile.getTileDotsLeft() == chainRightNumber || tile.getTileDotsRight() == chainRightNumber )
+            rightPossible = true;
+        String response="";
+        if (leftPossible && rightPossible && chainLeftNumber != chainRightNumber) {
+            bothPossible=true;
+            response = InputOutput.askLeftOrRight();
+            if (response == "L") {
+                if ( tile.getTileDotsRight() != chainLeftNumber )
+                    swapTileDots(tile);
+                return true;
+            } else {
+                if ( tile.getTileDotsLeft() != chainRightNumber )
+                    swapTileDots(tile);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private void swapTileDots(Tile tile) {
+        int tmpDots = tile.getTileDotsLeft();
+        tile.setTileDotsLeft(tile.getTileDotsRight());
+        tile.setTileDotsRight(tmpDots);
     }
 
     public void gameplay() {
