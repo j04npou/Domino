@@ -45,13 +45,15 @@ public abstract class DominoGame implements DominoGameInterface {
         this.isTeamGame = isTeamGame;
         this.targetPoints = targetPoints;
         this.firstEverTurn=true;
+        this.tilePool = new ArrayList<>();
+        this.tilesPlayed = new ArrayList<>();
+        this.players = new ArrayList<>();
 
         // Cream els equis/jugadors
         initPlayers(numberOfPlayers, isTeamGame);
     }
 
     private void initPlayers(int numberOfPlayers, boolean isTeamGame) {
-        ArrayList<Player> players = new ArrayList<>();
         if (isTeamGame) {
             // si jugam per equips
             numberOfPlayers = 4;
@@ -69,5 +71,29 @@ public abstract class DominoGame implements DominoGameInterface {
                 players.add(new Player(i+1, i+1));
             }
         }
+    }
+
+    private void initTilePool() {
+        // Cream totes les fitxes i les posam al munt
+        for (int x = 0; x <= 6; x++) {
+            for (int y = 0; y <= x; y++) {
+                tilePool.add(new Tile(x,y,false));
+            }
+        }
+    }
+
+    public void gameplay() {
+        initTilePool();
+        showTiles(tilePool,false);
+    }
+
+    public void showTiles(ArrayList<Tile> array, boolean hidden){
+        for (int i = 0; i < array.size(); i++) {
+            if (hidden)
+                System.out.print(tilesReverseV);
+            else
+                System.out.print(tilesV[array.get(i).getTileDotsLeft()][array.get(i).getTileDotsRight()] + " ");
+        }
+        System.out.println();
     }
 }
