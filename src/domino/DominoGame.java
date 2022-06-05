@@ -1,5 +1,7 @@
 package domino;
 
+import java.util.ArrayList;
+
 interface DominoGameInterface {
     boolean canBeTheFirstPlayer(Player player);
     boolean checkTotalWin();
@@ -30,5 +32,42 @@ interface DominoGameInterface {
     String tilesReverseV = "\uD83C\uDC62";
 }
 public abstract class DominoGame implements DominoGameInterface {
+    private ArrayList<Tile> tilePool;
+    private ArrayList<Tile> tilesPlayed;
+    private  ArrayList<Player> players;
+    private int targetPoints;
+    private boolean isTeamGame;
+    private int playerTurn;
+    private boolean firstEverTurn;
+    private int playerPassCounter;
 
+    public DominoGame(int numberOfPlayers, boolean isTeamGame, int targetPoints) {
+        this.isTeamGame = isTeamGame;
+        this.targetPoints = targetPoints;
+        this.firstEverTurn=true;
+
+        // Cream els equis/jugadors
+        initPlayers(numberOfPlayers, isTeamGame);
+    }
+
+    private void initPlayers(int numberOfPlayers, boolean isTeamGame) {
+        ArrayList<Player> players = new ArrayList<>();
+        if (isTeamGame) {
+            // si jugam per equips
+            numberOfPlayers = 4;
+            int teamChoice = 1;
+            for (int i = 0; i < numberOfPlayers; i++) {
+                players.add(new Player(i+1, teamChoice));
+                teamChoice++;
+                if (teamChoice > 2){
+                    teamChoice = 1;
+                }
+            }
+        } else {
+            // si jugam individual
+            for (int i = 0; i < numberOfPlayers; i++) {
+                players.add(new Player(i+1, i+1));
+            }
+        }
+    }
 }

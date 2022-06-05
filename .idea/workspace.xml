@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domino/DominoLatino.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domino/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/DominoLatino.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoLatino.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -49,6 +50,20 @@
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Game" />
+      <module name="Domino" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Game" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -57,7 +72,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654425872517</updated>
-      <workItem from="1654425874404" duration="2796000" />
+      <workItem from="1654425874404" duration="5463000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -66,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654426444067</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Created initial object structure">
+      <created>1654428752473</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1654428752473</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -74,6 +96,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initializated Tile object" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initializated Tile object" />
+    <MESSAGE value="Created initial object structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created initial object structure" />
   </component>
 </project>
