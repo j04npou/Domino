@@ -1,3 +1,5 @@
+package domino;
+
 public class Tile {
     private int tileDotsLeft;
     private int tileDotsRight;
