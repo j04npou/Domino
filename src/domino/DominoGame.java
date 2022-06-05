@@ -108,6 +108,20 @@ public abstract class DominoGame implements DominoGameInterface {
         }
     }
 
+    private void showTeams() {
+        if (isTeamGame) {
+            for (int i = 1; i <= 2; i++) {
+                System.out.println("Team " + i + ":");
+                for (int j = 0; j < players.size(); j++) {
+                    if (players.get(j).playerTeam == i){
+                        System.out.print("\tPlayer " + players.get(j).playerNumber + " ");
+                        showTiles(players.get(j).playerTiles,true);
+                    }
+                }
+            }
+        }
+    }
+
     public void gameplay() {
         initTilePool();
         dealTiles();
@@ -117,5 +131,6 @@ public abstract class DominoGame implements DominoGameInterface {
             System.out.println("Team " + players.get(i).playerTeam);
             showTiles(players.get(i).playerTiles,false);
         }
+        showTeams();
     }
 }
