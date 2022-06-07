@@ -62,7 +62,7 @@ public abstract class DominoGame implements DominoGameInterface {
             if (hidden)
                 System.out.print(tilesReverseV);
             else
-                System.out.print(tilesV[array.get(i).getTileDotsLeft()][array.get(i).getTileDotsRight()] + " ");
+                System.out.print(array.get(i).showHtile() + " ");
         }
         System.out.println();
     }
@@ -183,12 +183,87 @@ public abstract class DominoGame implements DominoGameInterface {
         tile.setTileDotsRight(tmpDots);
     }
 
-    public void gameplay() {
-        initTilePool();
-        dealTiles();
-        firstMove();
-        showTiles(tilePool,false);
+    public boolean checkEndGame() {
+        // tots els jugadors passen torn
+        if ( playerPassCounter >= players.size() ) {
+            // ¿cercar qui ha guañyat? ****
+            return true;
+        }
+
+        // Un jugador a acabat les seves fitxes
+        if (findPlayerWithNoTiles() != 0)
+            return true;
+
+        return false;
+    }
+
+    private int findPlayerWithNoTiles() {
+        for (int playerNumber = 1; playerNumber <= players.size(); playerNumber++) {
+            if (players.get(playerNumber).playerTiles.size() == 0) {
+                return playerNumber;
+            }
+        }
+        return 0;
+    }
+
+    private void game() {
+        playerTurn++;
+        if ( playerTurn > players.size() )
+            playerTurn = 1;
+
+        // Primer moviment, cercam jugador que te el 6 doble, i posa sa fitxa i pasar el torn.
+        if ( tilesPlayed.size() == 0 ) {
+            firstMove();
+        }
+
+        // Mostram els equips i fitxes tapades dels jugadors
         showTeams();
-        showTiles(tilesPlayed,false);
+
+        // Mostram fitxes colocades
+        showGame();
+
+        // Mostram fitxes destapades del jugador actiu
+        System.out.println("Player " + playerTurn);
+        showTiles(players.get(playerTurn).playerTiles, false);
+
+        // jugador fa jugada
+//        cancelGame = playerMakeMove();
+
+        System.out.println("----------------------------------------------------------------------------");
+    }
+
+    private void showGame() {
+        for (int i = 0; i < tilesPlayed.size(); i++) {
+            System.out.print(tilesPlayed.get(i));
+        }
+        System.out.println();
+    }
+
+    public void gameplay() {
+        boolean exitGame = false;
+        playerTurn = 0;
+        do {
+            playerPassCounter = 0;
+            // Inicialitzam i repartim fitxes
+            tilesPlayed.clear();
+            initTilePool();
+            dealTiles();
+
+            // Assignam qui comença aquesta partida
+            playerTurn = nextRoundTurn++;
+            do {
+                game();
+            }while (!checkEndGame() && !exitGame);
+
+            if ( playerPassCounter >= players.size() ) {
+                // Cercar guanyador: playerTurn = findTrancaWinner();
+            }
+            System.out.println("Guanyador " + playerTurn);
+
+            // Contam punts
+            countPoints();
+            System.out.println("----------------------------------------------------------------------------");
+
+        }while (!checkTotalWin() && !exitGame);
     }
 }
