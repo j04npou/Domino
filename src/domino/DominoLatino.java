@@ -8,6 +8,12 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public boolean checkTotalWin() {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).points >= targetPoints){
+                System.out.println("Team " + players.get(i).playerTeam + " WINS");
+                return true;
+            }
+        }
         return false;
     }
 
@@ -39,16 +45,19 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public String getGameName() {
-        return null;
+        return "Domino Latino";
     }
 
     @Override
     public void showGameRules() {
-
+        System.out.println("Només per parelles...");
     }
 
     @Override
     public boolean playerCantMove() {
-        return false;
+        System.out.println("Pasa.");
+        playerPassCounter++;
+        return true;
+        // valorar que si es partida de menys de 4 jugadors s'han d'agafar fitxes del munt
     }
 }

@@ -3,44 +3,16 @@ package domino;
 import java.util.ArrayList;
 import java.util.Random;
 
-interface DominoGameInterface {
-    boolean checkTotalWin();
-    int countPoints();
-    void makeFirstEverMoveTurn();
-    String getGameName();
-    void showGameRules();
-    boolean playerCantMove();
-    String[][] tilesH = {
-            { "\uD83C\uDC31", "\uD83C\uDC32", "\uD83C\uDC33", "\uD83C\uDC34", "\uD83C\uDC35", "\uD83C\uDC36", "\uD83C\uDC37" },
-            { "\uD83C\uDC38", "\uD83C\uDC39", "\uD83C\uDC3A", "\uD83C\uDC3B", "\uD83C\uDC3C", "\uD83C\uDC3D", "\uD83C\uDC3E" },
-            { "\uD83C\uDC3F", "\uD83C\uDC40", "\uD83C\uDC41", "\uD83C\uDC42", "\uD83C\uDC43", "\uD83C\uDC44", "\uD83C\uDC45" },
-            { "\uD83C\uDC46", "\uD83C\uDC47", "\uD83C\uDC48", "\uD83C\uDC49", "\uD83C\uDC4A", "\uD83C\uDC4B", "\uD83C\uDC4C" },
-            { "\uD83C\uDC4D", "\uD83C\uDC4E", "\uD83C\uDC4F", "\uD83C\uDC50", "\uD83C\uDC51", "\uD83C\uDC52", "\uD83C\uDC53" },
-            { "\uD83C\uDC54", "\uD83C\uDC55", "\uD83C\uDC56", "\uD83C\uDC57", "\uD83C\uDC58", "\uD83C\uDC59", "\uD83C\uDC5A" },
-            { "\uD83C\uDC5B", "\uD83C\uDC5C", "\uD83C\uDC5D", "\uD83C\uDC5E", "\uD83C\uDC5F", "\uD83C\uDC60", "\uD83C\uDC61" }
-    };
-    String[][] tilesV = {
-            { "\uD83C\uDC63", "\uD83C\uDC64", "\uD83C\uDC65", "\uD83C\uDC66", "\uD83C\uDC67", "\uD83C\uDC68", "\uD83C\uDC69" },
-            { "\uD83C\uDC6A", "\uD83C\uDC6B", "\uD83C\uDC6C", "\uD83C\uDC6D", "\uD83C\uDC6E", "\uD83C\uDC6F", "\uD83C\uDC70" },
-            { "\uD83C\uDC71", "\uD83C\uDC72", "\uD83C\uDC73", "\uD83C\uDC74", "\uD83C\uDC75", "\uD83C\uDC76", "\uD83C\uDC77" },
-            { "\uD83C\uDC78", "\uD83C\uDC79", "\uD83C\uDC7A", "\uD83C\uDC7B", "\uD83C\uDC7C", "\uD83C\uDC7D", "\uD83C\uDC7E" },
-            { "\uD83C\uDC7F", "\uD83C\uDC80", "\uD83C\uDC81", "\uD83C\uDC82", "\uD83C\uDC83", "\uD83C\uDC84", "\uD83C\uDC85" },
-            { "\uD83C\uDC86", "\uD83C\uDC87", "\uD83C\uDC88", "\uD83C\uDC89", "\uD83C\uDC8A", "\uD83C\uDC8B", "\uD83C\uDC8C" },
-            { "\uD83C\uDC8D", "\uD83C\uDC8E", "\uD83C\uDC8F", "\uD83C\uDC90", "\uD83C\uDC91", "\uD83C\uDC92", "\uD83C\uDC93" }
-    };
-    String tilesReverseH = "\uD83C\uDC30";
-    String tilesReverseV = "\uD83C\uDC62";
-}
 public abstract class DominoGame implements DominoGameInterface {
     private ArrayList<Tile> tilePool;
     private ArrayList<Tile> tilesPlayed;
     public ArrayList<Player> players;
-    private int targetPoints;
+    protected int targetPoints;
     private boolean isTeamGame;
     public int playerTurn;
     public int nextRoundTurn;
     private boolean firstEverTurn;
-    private int playerPassCounter;
+    protected int playerPassCounter;
     private int chainLeftNumber;
     private int chainRightNumber;
 
@@ -90,7 +62,7 @@ public abstract class DominoGame implements DominoGameInterface {
             if (hidden)
                 System.out.print(tilesReverseV);
             else
-                System.out.print(tilesV[array.get(i).getTileDotsLeft()][array.get(i).getTileDotsRight()] + " ");
+                System.out.print(array.get(i).showHtile() + " ");
         }
         System.out.println();
     }
@@ -158,12 +130,12 @@ public abstract class DominoGame implements DominoGameInterface {
 
     public void putTile(Player tmpPlayer, int playerTilePosition) {
         // actualitzam extrems
-        if (tilesPlayed.size() == 1) {
+        if (tilesPlayed.size() == 0) {
+            // posam la fitxa al joc
+            tilesPlayed.add(tmpPlayer.playerTiles.get(playerTilePosition));
             // Primera fitxa colocada
             chainLeftNumber = tilesPlayed.get(0).getTileDotsLeft();
             chainRightNumber = tilesPlayed.get(0).getTileDotsRight();
-            // posam la fitxa al joc
-            tilesPlayed.add(tmpPlayer.playerTiles.get(playerTilePosition));
         } else {
             // posteriors fitxes
             boolean isLeft = checkIsLeftMove(tmpPlayer.playerTiles.get(playerTilePosition));
@@ -189,10 +161,11 @@ public abstract class DominoGame implements DominoGameInterface {
             leftPossible = true;
         if ( tile.getTileDotsLeft() == chainRightNumber || tile.getTileDotsRight() == chainRightNumber )
             rightPossible = true;
-        String response;
-        if (leftPossible && rightPossible && chainLeftNumber != chainRightNumber) {
-            response = InputOutput.askLeftOrRight();
-            if (response.equals("L")) {
+        String response = "";
+        if (chainLeftNumber != chainRightNumber) {
+            if (leftPossible && rightPossible)
+                response = InputOutput.askLeftOrRight();
+            if (response.equals("L") || (response.equals("") && leftPossible)) {
                 if ( tile.getTileDotsRight() != chainLeftNumber )
                     swapTileDots(tile);
                 return true;
@@ -211,12 +184,130 @@ public abstract class DominoGame implements DominoGameInterface {
         tile.setTileDotsRight(tmpDots);
     }
 
-    public void gameplay() {
-        initTilePool();
-        dealTiles();
-        firstMove();
-        showTiles(tilePool,false);
+    public boolean checkEndGame() {
+        // tots els jugadors passen torn
+        if ( playerPassCounter >= players.size() ) {
+            // ¿cercar qui ha guañyat? ****
+            return true;
+        }
+
+        // Un jugador a acabat les seves fitxes
+        if (findPlayerWithNoTiles() != 0)
+            return true;
+
+        return false;
+    }
+
+    private int findPlayerWithNoTiles() {
+        for (int playerNumber = 0; playerNumber < players.size(); playerNumber++) {
+            if (players.get(playerNumber).playerTiles.size() == 0) {
+                return playerNumber;
+            }
+        }
+        return 0;
+    }
+
+    private boolean game() {
+        playerTurn++;
+        if ( playerTurn > players.size() )
+            playerTurn = 1;
+
+        // Primer moviment, cercam jugador que te el 6 doble, i posa sa fitxa i pasar el torn.
+        if ( tilesPlayed.size() == 0 ) {
+            firstMove();
+        }
+
+        // Mostram els equips i fitxes tapades dels jugadors
         showTeams();
-        showTiles(tilesPlayed,false);
+
+        // Mostram fitxes colocades
+        showGame();
+
+        // Mostram fitxes destapades del jugador actiu
+        System.out.println("Player " + playerTurn);
+        showTiles(players.get(playerTurn-1).playerTiles, false);
+
+        // jugador fa jugada
+        return playerMakeMove();
+    }
+
+    private boolean playerMakeMove() {
+        // Comprovam si el jugador pot fer alguna jugada
+        String possibleMoves = checkPossibleMoves(players.get(playerTurn-1).playerTiles);
+        if (possibleMoves.replace(" ", "").length() > 0) {
+            // demanam fitxa a posar
+            int inputMove = InputOutput.choseNumberFromList(possibleMoves);
+            if (inputMove == 0)
+                return true;
+            else {
+                // colocam fitxa a la cadena
+                putTile(players.get(playerTurn-1), inputMove - 1);
+            }
+            playerPassCounter = 0;
+        } else {
+            // Passam
+            playerCantMove();
+        }
+        return false;
+    }
+
+    private String checkPossibleMoves(ArrayList<Tile> array) {
+        String tmpMoves = "";
+        for (int i = 0; i < array.size(); i++) {
+            if (    array.get(i).getTileDotsLeft() == chainLeftNumber ||
+                    array.get(i).getTileDotsLeft() == chainRightNumber ||
+                    array.get(i).getTileDotsRight() == chainLeftNumber ||
+                    array.get(i).getTileDotsRight() == chainRightNumber
+            ){
+                tmpMoves = tmpMoves.concat((i + 1) + " ");
+            } else {
+                tmpMoves = tmpMoves.concat("   ");
+            }
+        }
+        return tmpMoves;
+    }
+
+    private void showGame() {
+        System.out.println("Fitxes jugades:");
+        for (int i = 0; i < tilesPlayed.size(); i++) {
+            System.out.print(tilesPlayed.get(i));
+        }
+        System.out.println();
+    }
+
+    private void clearPlayerTiles(){
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).playerTiles.clear();
+        }
+    }
+
+    public void gameplay() {
+        boolean exitGame = false;
+        playerTurn = 0;
+        do {
+            playerPassCounter = 0;
+            // Inicialitzam i repartim fitxes
+            tilesPlayed.clear();
+            clearPlayerTiles();
+            initTilePool();
+            dealTiles();
+
+            // Assignam qui comença aquesta partida
+            playerTurn = nextRoundTurn++;
+            do {
+                game();
+                System.out.println("----------------------------------------------------------------------------");
+            }while (!checkEndGame() && !exitGame);
+
+            if ( playerPassCounter >= players.size() ) {
+                // Cercar guanyador: playerTurn = findTrancaWinner();
+            }
+            System.out.println("Guanyador " + playerTurn);
+
+            // Contam punts
+            countPoints();
+            System.out.println("----------------------------------------------------------------------------");
+
+        }while (!checkTotalWin() && !exitGame);
     }
 }
