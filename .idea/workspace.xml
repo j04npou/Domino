@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" afterDir="false" />
+    <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="Extract interface in a separated file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/Tile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +75,8 @@
       <option name="presentableId" value="Default" />
       <updated>1654425872517</updated>
       <workItem from="1654425874404" duration="15749000" />
-      <workItem from="1654504771461" duration="1384000" />
+      <workItem from="1654504771461" duration="2457000" />
+      <workItem from="1654619265980" duration="5007000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -146,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654449943161</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Extract interface in a separated file">
+      <created>1654508846697</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1654508846697</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,7 +172,8 @@
     <MESSAGE value="Initial put tile move" />
     <MESSAGE value="First move validations" />
     <MESSAGE value="Fixed warnings" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed warnings" />
+    <MESSAGE value="Extract interface in a separated file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Extract interface in a separated file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
