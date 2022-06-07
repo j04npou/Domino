@@ -7,7 +7,7 @@ public abstract class DominoGame implements DominoGameInterface {
     private ArrayList<Tile> tilePool;
     private ArrayList<Tile> tilesPlayed;
     public ArrayList<Player> players;
-    private int targetPoints;
+    protected int targetPoints;
     private boolean isTeamGame;
     public int playerTurn;
     public int nextRoundTurn;
