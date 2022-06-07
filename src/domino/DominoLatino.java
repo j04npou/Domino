@@ -49,6 +49,9 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public boolean playerCantMove() {
-        return false;
+        System.out.println("Pasa.");
+        playerPassCounter++;
+        return true;
+        // valorar que si es partida de menys de 4 jugadors s'han d'agafar fitxes del munt
     }
 }

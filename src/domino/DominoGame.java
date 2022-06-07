@@ -12,7 +12,7 @@ public abstract class DominoGame implements DominoGameInterface {
     public int playerTurn;
     public int nextRoundTurn;
     private boolean firstEverTurn;
-    private int playerPassCounter;
+    protected int playerPassCounter;
     private int chainLeftNumber;
     private int chainRightNumber;
 
@@ -130,12 +130,12 @@ public abstract class DominoGame implements DominoGameInterface {
 
     public void putTile(Player tmpPlayer, int playerTilePosition) {
         // actualitzam extrems
-        if (tilesPlayed.size() == 1) {
+        if (tilesPlayed.size() == 0) {
+            // posam la fitxa al joc
+            tilesPlayed.add(tmpPlayer.playerTiles.get(playerTilePosition));
             // Primera fitxa colocada
             chainLeftNumber = tilesPlayed.get(0).getTileDotsLeft();
             chainRightNumber = tilesPlayed.get(0).getTileDotsRight();
-            // posam la fitxa al joc
-            tilesPlayed.add(tmpPlayer.playerTiles.get(playerTilePosition));
         } else {
             // posteriors fitxes
             boolean isLeft = checkIsLeftMove(tmpPlayer.playerTiles.get(playerTilePosition));
@@ -161,10 +161,11 @@ public abstract class DominoGame implements DominoGameInterface {
             leftPossible = true;
         if ( tile.getTileDotsLeft() == chainRightNumber || tile.getTileDotsRight() == chainRightNumber )
             rightPossible = true;
-        String response;
-        if (leftPossible && rightPossible && chainLeftNumber != chainRightNumber) {
-            response = InputOutput.askLeftOrRight();
-            if (response.equals("L")) {
+        String response = "";
+        if (chainLeftNumber != chainRightNumber) {
+            if (leftPossible && rightPossible)
+                response = InputOutput.askLeftOrRight();
+            if (response.equals("L") || (response.equals("") && leftPossible)) {
                 if ( tile.getTileDotsRight() != chainLeftNumber )
                     swapTileDots(tile);
                 return true;
@@ -198,7 +199,7 @@ public abstract class DominoGame implements DominoGameInterface {
     }
 
     private int findPlayerWithNoTiles() {
-        for (int playerNumber = 1; playerNumber <= players.size(); playerNumber++) {
+        for (int playerNumber = 0; playerNumber < players.size(); playerNumber++) {
             if (players.get(playerNumber).playerTiles.size() == 0) {
                 return playerNumber;
             }
@@ -206,7 +207,7 @@ public abstract class DominoGame implements DominoGameInterface {
         return 0;
     }
 
-    private void game() {
+    private boolean game() {
         playerTurn++;
         if ( playerTurn > players.size() )
             playerTurn = 1;
@@ -224,19 +225,60 @@ public abstract class DominoGame implements DominoGameInterface {
 
         // Mostram fitxes destapades del jugador actiu
         System.out.println("Player " + playerTurn);
-        showTiles(players.get(playerTurn).playerTiles, false);
+        showTiles(players.get(playerTurn-1).playerTiles, false);
 
         // jugador fa jugada
-//        cancelGame = playerMakeMove();
+        return playerMakeMove();
+    }
 
-        System.out.println("----------------------------------------------------------------------------");
+    private boolean playerMakeMove() {
+        // Comprovam si el jugador pot fer alguna jugada
+        String possibleMoves = checkPossibleMoves(players.get(playerTurn-1).playerTiles);
+        if (possibleMoves.replace(" ", "").length() > 0) {
+            // demanam fitxa a posar
+            int inputMove = InputOutput.choseNumberFromList(possibleMoves);
+            if (inputMove == 0)
+                return true;
+            else {
+                // colocam fitxa a la cadena
+                putTile(players.get(playerTurn-1), inputMove - 1);
+            }
+            playerPassCounter = 0;
+        } else {
+            // Passam
+            playerCantMove();
+        }
+        return false;
+    }
+
+    private String checkPossibleMoves(ArrayList<Tile> array) {
+        String tmpMoves = "";
+        for (int i = 0; i < array.size(); i++) {
+            if (    array.get(i).getTileDotsLeft() == chainLeftNumber ||
+                    array.get(i).getTileDotsLeft() == chainRightNumber ||
+                    array.get(i).getTileDotsRight() == chainLeftNumber ||
+                    array.get(i).getTileDotsRight() == chainRightNumber
+            ){
+                tmpMoves = tmpMoves.concat((i + 1) + " ");
+            } else {
+                tmpMoves = tmpMoves.concat("   ");
+            }
+        }
+        return tmpMoves;
     }
 
     private void showGame() {
+        System.out.println("Fitxes jugades:");
         for (int i = 0; i < tilesPlayed.size(); i++) {
             System.out.print(tilesPlayed.get(i));
         }
         System.out.println();
+    }
+
+    private void clearPlayerTiles(){
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).playerTiles.clear();
+        }
     }
 
     public void gameplay() {
@@ -246,6 +288,7 @@ public abstract class DominoGame implements DominoGameInterface {
             playerPassCounter = 0;
             // Inicialitzam i repartim fitxes
             tilesPlayed.clear();
+            clearPlayerTiles();
             initTilePool();
             dealTiles();
 
@@ -253,6 +296,7 @@ public abstract class DominoGame implements DominoGameInterface {
             playerTurn = nextRoundTurn++;
             do {
                 game();
+                System.out.println("----------------------------------------------------------------------------");
             }while (!checkEndGame() && !exitGame);
 
             if ( playerPassCounter >= players.size() ) {
