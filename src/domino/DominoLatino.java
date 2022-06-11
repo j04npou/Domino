@@ -37,7 +37,7 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public void countPoints() {
-        int winnerTeam = players.get(playerTurn).playerTeam;
+        int winnerTeam = players.get(playerTurn-1).playerTeam;
         int points = 0;
 
         for (int i = 0; i < players.size(); i++) {
@@ -59,10 +59,10 @@ public class DominoLatino extends DominoGame {
                 // posam la fitxa en joc i la llevam del jugador
                 putTile(tmpPlayer, tmpPlayer.findPositionDouble(6));
                 // Guardam el torn d'aquesta partida per continuar rotant a les següents
+                nextRoundTurn = i;
                 playerTurn = i+1;
                 if ( playerTurn > players.size() )
                     playerTurn = 1;
-                nextRoundTurn = playerTurn;
                 break;
             }
         }

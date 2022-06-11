@@ -32,6 +32,15 @@ public class Player {
         return false;
     }
 
+    public boolean hasDouble() {
+        for (int i = 0; i < playerTiles.size() ; i++) {
+            if ( playerTiles.get(i).getTileDotsLeft() == playerTiles.get(i).getTileDotsRight()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int findPositionDouble(int doubleTile) {
         for (int i = 0; i < playerTiles.size() ; i++) {
             if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {

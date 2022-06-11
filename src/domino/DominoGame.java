@@ -85,7 +85,7 @@ public abstract class DominoGame implements DominoGameInterface {
     private void showTeams() {
         if (isTeamGame) {
             for (int i = 1; i <= 2; i++) {
-                System.out.println("Team " + i + ":");
+                System.out.println("Team " + i + " (points: " + players.get(i-1).points + ") :");
                 for (int j = 0; j < players.size(); j++) {
                     if (players.get(j).playerTeam == i) {
                         System.out.print("\tPlayer " + players.get(j).playerNumber + " ");
@@ -106,8 +106,6 @@ public abstract class DominoGame implements DominoGameInterface {
             // Primer moviment de tot el joc
             firstEverTurn = false;
             makeFirstEverMoveTurn();
-        } else {
-//            if (players.get(playerTurn).playerTiles)
         }
     }
 
@@ -184,7 +182,7 @@ public abstract class DominoGame implements DominoGameInterface {
     private int findPlayerWithNoTiles() {
         for (int playerNumber = 0; playerNumber < players.size(); playerNumber++) {
             if (players.get(playerNumber).playerTiles.size() == 0) {
-                return playerNumber;
+                return players.get(playerNumber).playerNumber;
             }
         }
         return 0;
@@ -236,15 +234,32 @@ public abstract class DominoGame implements DominoGameInterface {
 
     private String checkPossibleMoves(ArrayList<Tile> array) {
         String tmpMoves = "";
-        for (int i = 0; i < array.size(); i++) {
-            if (    array.get(i).getTileDotsLeft() == chainLeftNumber ||
-                    array.get(i).getTileDotsLeft() == chainRightNumber ||
-                    array.get(i).getTileDotsRight() == chainLeftNumber ||
-                    array.get(i).getTileDotsRight() == chainRightNumber
-            ){
-                tmpMoves = tmpMoves.concat((i + 1) + " ");
+        if (tilesPlayed.size() == 0) {
+            // A partir de la segona ma
+            if (players.get(playerTurn).hasDouble()) {
+                // pinta numeros dels dobles
+                for (int i = 0; i < array.size(); i++) {
+                    if (array.get(i).getTileDotsLeft() == array.get(i).getTileDotsRight())
+                        tmpMoves = tmpMoves.concat((i+1) + " ");
+                    else
+                        tmpMoves = tmpMoves.concat("   ");
+                }
             } else {
-                tmpMoves = tmpMoves.concat("   ");
+                // pinta tots els numeros
+                tmpMoves = "1 2 3 4 5 6 7";
+            }
+        } else {
+            // Seguents moviments
+            for (int i = 0; i < array.size(); i++) {
+                if (array.get(i).getTileDotsLeft() == chainLeftNumber ||
+                        array.get(i).getTileDotsLeft() == chainRightNumber ||
+                        array.get(i).getTileDotsRight() == chainLeftNumber ||
+                        array.get(i).getTileDotsRight() == chainRightNumber
+                ) {
+                    tmpMoves = tmpMoves.concat((i + 1) + " ");
+                } else {
+                    tmpMoves = tmpMoves.concat("   ");
+                }
             }
         }
         return tmpMoves;
