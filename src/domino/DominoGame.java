@@ -236,7 +236,7 @@ public abstract class DominoGame implements DominoGameInterface {
         String tmpMoves = "";
         if (tilesPlayed.size() == 0) {
             // A partir de la segona ma
-            if (players.get(playerTurn).hasDouble()) {
+            if (players.get(playerTurn-1).hasDouble()) {
                 // pinta numeros dels dobles
                 for (int i = 0; i < array.size(); i++) {
                     if (array.get(i).getTileDotsLeft() == array.get(i).getTileDotsRight())
@@ -246,7 +246,7 @@ public abstract class DominoGame implements DominoGameInterface {
                 }
             } else {
                 // pinta tots els numeros
-                tmpMoves = "1 2 3 4 5 6 7";
+                tmpMoves = "1  2 3  4  5 6  7";
             }
         } else {
             // Seguents moviments
@@ -295,18 +295,20 @@ public abstract class DominoGame implements DominoGameInterface {
             if (nextRoundTurn > 4)
                 nextRoundTurn = 1;
             do {
-                game();
+                exitGame = game();
                 System.out.println("----------------------------------------------------------------------------");
-            }while (!checkEndGame() && !exitGame);
+            } while (!checkEndGame() && !exitGame);
 
-            if ( playerPassCounter >= players.size() ) {
-                playerTurn = findTrancaWinner();
+            if (!exitGame) {
+                if (playerPassCounter >= players.size()) {
+                    playerTurn = findTrancaWinner();
+                }
+                System.out.println("Guanyador " + playerTurn);
+
+                // Contam punts
+                countPoints();
+                System.out.println("----------------------------------------------------------------------------");
             }
-            System.out.println("Guanyador " + playerTurn);
-
-            // Contam punts
-            countPoints();
-            System.out.println("----------------------------------------------------------------------------");
 
         }while (!checkTotalWin() && !exitGame);
     }

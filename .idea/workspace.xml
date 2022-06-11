@@ -7,8 +7,6 @@
     <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domino/DominoLatino.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoLatino.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domino/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +77,7 @@
       <workItem from="1654619265980" duration="10114000" />
       <workItem from="1654668785538" duration="6937000" />
       <workItem from="1654708285392" duration="996000" />
-      <workItem from="1654963989812" duration="10091000" />
+      <workItem from="1654963989812" duration="12088000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -200,7 +198,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654969787494</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Added logic for first move of 2nd round and nexts and minor changes">
+      <created>1654974257597</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1654974257597</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,7 +229,8 @@
     <MESSAGE value="Implemented checkTotalWin method" />
     <MESSAGE value="Implemented findTrancaWinner and countPoints in DominoLatino" />
     <MESSAGE value="Moved hasDouble and findPositionDouble methods to Player class and implemented countDots" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved hasDouble and findPositionDouble methods to Player class and implemented countDots" />
+    <MESSAGE value="Added logic for first move of 2nd round and nexts and minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added logic for first move of 2nd round and nexts and minor changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -233,6 +239,11 @@
           <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/domino/Player.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
