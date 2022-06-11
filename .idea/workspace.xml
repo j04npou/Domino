@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="">
+    <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="Implemented checkTotalWin method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoLatino.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoLatino.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +77,10 @@
       <updated>1654425872517</updated>
       <workItem from="1654425874404" duration="15749000" />
       <workItem from="1654504771461" duration="2457000" />
-      <workItem from="1654619265980" duration="9920000" />
+      <workItem from="1654619265980" duration="10114000" />
+      <workItem from="1654668785538" duration="6937000" />
+      <workItem from="1654708285392" duration="996000" />
+      <workItem from="1654963989812" duration="5594000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -175,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654628670298</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Implemented checkTotalWin method">
+      <created>1654629265958</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1654629265958</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,7 +208,8 @@
     <MESSAGE value="Moved to Tile the logic to display tile" />
     <MESSAGE value="Added few implementations to play" />
     <MESSAGE value="Implemented player move" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented player move" />
+    <MESSAGE value="Implemented checkTotalWin method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented checkTotalWin method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -205,11 +218,6 @@
           <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/domino/DominoGame.java</url>
-          <line>140</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

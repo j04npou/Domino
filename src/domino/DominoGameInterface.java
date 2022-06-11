@@ -2,7 +2,8 @@ package domino;
 
 public interface DominoGameInterface {
     boolean checkTotalWin();
-    int countPoints();
+    int findTrancaWinner();
+    void countPoints();
     void makeFirstEverMoveTurn();
     String getGameName();
     void showGameRules();

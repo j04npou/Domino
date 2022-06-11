@@ -18,8 +18,33 @@ public class DominoLatino extends DominoGame {
     }
 
     @Override
-    public int countPoints() {
-        return 0;
+    public int findTrancaWinner() {
+        int[] teamPoints = new int[2];
+        for (int i = 0; i < players.size(); i++) {
+            teamPoints[players.get(i).playerTeam - 1] += players.get(i).countDots();
+        }
+        if (teamPoints[0] > teamPoints[1])
+            return 2;
+        else if (teamPoints[0] < teamPoints[1])
+            return 1;
+        else {
+            if (nextRoundTurn-1 < 1)
+                return players.size();
+            else
+                return nextRoundTurn-1;
+        }
+    }
+
+    @Override
+    public void countPoints() {
+        int winnerTeam = players.get(playerTurn).playerTeam;
+        int points = 0;
+
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).playerTeam != winnerTeam)
+                points += players.get(i).countDots();
+        }
+        players.get(winnerTeam-1).points = points;
     }
 
     @Override
@@ -30,9 +55,9 @@ public class DominoLatino extends DominoGame {
         for (int i = 1; i <= players.size() ; i++) {
             Player tmpPlayer = players.get(i-1);
             // Comprovam si aquest jugador compleix la condició d'esser el primer en jugar
-            if ( hasDouble(6, tmpPlayer.playerTiles) ) {
+            if ( tmpPlayer.hasDouble(6) ) {
                 // posam la fitxa en joc i la llevam del jugador
-                putTile(tmpPlayer, findPositionDouble(6, tmpPlayer.playerTiles));
+                putTile(tmpPlayer, tmpPlayer.findPositionDouble(6));
                 // Guardam el torn d'aquesta partida per continuar rotant a les següents
                 playerTurn = i+1;
                 if ( playerTurn > players.size() )
