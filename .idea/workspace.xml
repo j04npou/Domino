@@ -7,6 +7,8 @@
     <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/DominoLatino.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoLatino.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +79,7 @@
       <workItem from="1654619265980" duration="10114000" />
       <workItem from="1654668785538" duration="6937000" />
       <workItem from="1654708285392" duration="996000" />
-      <workItem from="1654963989812" duration="12088000" />
+      <workItem from="1654963989812" duration="14371000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -205,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654974257597</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Fixed exit game and solved incorrect index">
+      <created>1654979466813</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1654979466813</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,7 +239,8 @@
     <MESSAGE value="Implemented findTrancaWinner and countPoints in DominoLatino" />
     <MESSAGE value="Moved hasDouble and findPositionDouble methods to Player class and implemented countDots" />
     <MESSAGE value="Added logic for first move of 2nd round and nexts and minor changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added logic for first move of 2nd round and nexts and minor changes" />
+    <MESSAGE value="Fixed exit game and solved incorrect index" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed exit game and solved incorrect index" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

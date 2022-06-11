@@ -279,6 +279,20 @@ public abstract class DominoGame implements DominoGameInterface {
         }
     }
 
+    public boolean checkTotalWin() {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).points >= targetPoints){
+                showTeams();
+                if (isTeamGame)
+                    System.out.println("Team " + players.get(i).playerTeam + " WINS");
+                else
+                    System.out.println("Player " + players.get(i).playerNumber + " WINS");
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void gameplay() {
         boolean exitGame = false;
         playerTurn = 0;
@@ -303,7 +317,10 @@ public abstract class DominoGame implements DominoGameInterface {
                 if (playerPassCounter >= players.size()) {
                     playerTurn = findTrancaWinner();
                 }
-                System.out.println("Guanyador " + playerTurn);
+                if (isTeamGame)
+                    System.out.println("Equip guanyador " + players.get(playerTurn-1).playerTeam);
+                else
+                    System.out.println("Guanyador " + players.get(playerTurn-1).playerNumber);
 
                 // Contam punts
                 countPoints();

@@ -1,7 +1,6 @@
 package domino;
 
 public interface DominoGameInterface {
-    boolean checkTotalWin();
     int findTrancaWinner();
     void countPoints();
     void makeFirstEverMoveTurn();

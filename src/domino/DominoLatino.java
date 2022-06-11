@@ -7,17 +7,6 @@ public class DominoLatino extends DominoGame {
     }
 
     @Override
-    public boolean checkTotalWin() {
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).points >= targetPoints){
-                System.out.println("Team " + players.get(i).playerTeam + " WINS");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
     public int findTrancaWinner() {
         int[] teamPoints = new int[2];
         for (int i = 0; i < players.size(); i++) {
@@ -44,7 +33,7 @@ public class DominoLatino extends DominoGame {
             if (players.get(i).playerTeam != winnerTeam)
                 points += players.get(i).countDots();
         }
-        players.get(winnerTeam-1).points = points;
+        players.get(winnerTeam-1).points += points;
     }
 
     @Override
