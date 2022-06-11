@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="">
+    <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="Reordered and improved win messages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoLatino.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoLatino.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/InputOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/InputOutput.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +80,7 @@
       <workItem from="1654619265980" duration="10114000" />
       <workItem from="1654668785538" duration="6937000" />
       <workItem from="1654708285392" duration="996000" />
-      <workItem from="1654963989812" duration="14371000" />
+      <workItem from="1654963989812" duration="18006000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -214,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654979466813</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Reordered and improved win messages">
+      <created>1654981772282</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1654981772282</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +248,8 @@
     <MESSAGE value="Moved hasDouble and findPositionDouble methods to Player class and implemented countDots" />
     <MESSAGE value="Added logic for first move of 2nd round and nexts and minor changes" />
     <MESSAGE value="Fixed exit game and solved incorrect index" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed exit game and solved incorrect index" />
+    <MESSAGE value="Reordered and improved win messages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reordered and improved win messages" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

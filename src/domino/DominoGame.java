@@ -85,7 +85,7 @@ public abstract class DominoGame implements DominoGameInterface {
     private void showTeams() {
         if (isTeamGame) {
             for (int i = 1; i <= 2; i++) {
-                System.out.println("Team " + i + " (points: " + players.get(i-1).points + ") :");
+                System.out.println("Team " + i + " (Points: " + players.get(i-1).points + ") :");
                 for (int j = 0; j < players.size(); j++) {
                     if (players.get(j).playerTeam == i) {
                         System.out.print("\tPlayer " + players.get(j).playerNumber + " ");
@@ -95,9 +95,11 @@ public abstract class DominoGame implements DominoGameInterface {
             }
         } else {
             for (int j = 0; j < players.size(); j++) {
-                System.out.print("Player " + players.get(j).playerNumber + " ");
+                System.out.print("Player " + players.get(j).playerNumber + " (Points:" + players.get(j).points + "): ");
                 showTiles(players.get(j).playerTiles, true);
             }
+            System.out.print("Pool: ");
+            showTiles(tilePool,true);
         }
     }
 
@@ -266,7 +268,7 @@ public abstract class DominoGame implements DominoGameInterface {
     }
 
     private void showGame() {
-        System.out.println("Fitxes jugades:");
+        System.out.println("Tiles played:");
         for (int i = 0; i < tilesPlayed.size(); i++) {
             System.out.print(tilesPlayed.get(i));
         }
@@ -318,9 +320,9 @@ public abstract class DominoGame implements DominoGameInterface {
                     playerTurn = findTrancaWinner();
                 }
                 if (isTeamGame)
-                    System.out.println("Equip guanyador " + players.get(playerTurn-1).playerTeam);
+                    System.out.println("Winner team " + players.get(playerTurn-1).playerTeam);
                 else
-                    System.out.println("Guanyador " + players.get(playerTurn-1).playerNumber);
+                    System.out.println("Winner player " + players.get(playerTurn-1).playerNumber);
 
                 // Contam punts
                 countPoints();

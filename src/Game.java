@@ -7,7 +7,7 @@ public class Game {
     }
 
     public static void newGame() {
-        DominoGame domino = new DominoLatino(4,true,100 );
+        DominoGame domino = new DominoLatino(3,false,100 );
         domino.gameplay();
     }
 }
