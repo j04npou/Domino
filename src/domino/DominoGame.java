@@ -106,26 +106,9 @@ public abstract class DominoGame implements DominoGameInterface {
             // Primer moviment de tot el joc
             firstEverTurn = false;
             makeFirstEverMoveTurn();
+        } else {
+//            if (players.get(playerTurn).playerTiles)
         }
-        // FALTA COMPLETAR EL PRIMER MOVIMENT DE LES SEGUENTS PARTIDES
-    }
-
-    public boolean hasDouble(int doubleTile, ArrayList<Tile> playerTiles) {
-        for (int i = 0; i < playerTiles.size() ; i++) {
-            if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int findPositionDouble(int doubleTile, ArrayList<Tile> playerTiles) {
-        for (int i = 0; i < playerTiles.size() ; i++) {
-            if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public void putTile(Player tmpPlayer, int playerTilePosition) {
@@ -294,13 +277,15 @@ public abstract class DominoGame implements DominoGameInterface {
 
             // Assignam qui comença aquesta partida
             playerTurn = nextRoundTurn++;
+            if (nextRoundTurn > 4)
+                nextRoundTurn = 1;
             do {
                 game();
                 System.out.println("----------------------------------------------------------------------------");
             }while (!checkEndGame() && !exitGame);
 
             if ( playerPassCounter >= players.size() ) {
-                // Cercar guanyador: playerTurn = findTrancaWinner();
+                playerTurn = findTrancaWinner();
             }
             System.out.println("Guanyador " + playerTurn);
 
