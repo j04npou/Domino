@@ -2,8 +2,9 @@ package domino;
 
 public class DominoLatino extends DominoGame {
 
-    public DominoLatino(int numberOfPlayers, boolean isTeamGame, int targetPoints) {
-        super(numberOfPlayers, isTeamGame, targetPoints);
+    public DominoLatino(int numberOfPlayers, boolean isTeamGame) {
+        super(numberOfPlayers, isTeamGame);
+        this.targetPoints = 100;
     }
 
     @Override
@@ -105,10 +106,14 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public void showGameRules() {
-        System.out.println( "Dos equips de dos jugadors cada un.\n" +
+        System.out.println( "Es pot jugar per parelles o indivdualment.\n" +
                             "L'objectius es arribar a 100 punts.\n" +
-                            "Sortida: A la primera partida comença el jugador que te el doble 6.\n" +
-                            "Punts: L'equip guanyador acumula els punts que li queden per jugar a l'altre equip." );
+                            "Sortida: A la primera partida comença el jugador que te el doble 6 \n" +
+                            "o doble inferior.\n" +
+                            "Punts: La parella o el jugador guanyador acumula els punts que li \n" +
+                            "queden per jugar a l'altre equip.\n" +
+                            "Si hi ha empat a una tranca, a la modaditat en parelles guanya la \n" +
+                            "parella que era ma. Si era un joc individual ningú guanya punts." );
     }
 
     @Override
