@@ -1,6 +1,7 @@
 ### IntelliJ IDEA ###
 out/
 .idea/
+Domino.iml
 !**/src/main/**/out/
 !**/src/test/**/out/
 
