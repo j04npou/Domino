@@ -9,8 +9,8 @@ public class Game {
         } while (exit);
     }
 
-    public static void newGame(int numberOfPlayers, boolean isTeamGame, int targetPoints) {
-        DominoGame domino = new DominoLatino(numberOfPlayers,isTeamGame,targetPoints );
+    public static void newGame(int numberOfPlayers, boolean isTeamGame) {
+        DominoGame domino = new DominoLatino(numberOfPlayers,isTeamGame);
         domino.gameplay();
     }
 
@@ -23,7 +23,7 @@ public class Game {
 
         switch (menu) {
             case "1":
-                newGame(4,true,100);
+                newGame(4,true);
                 break;
             case "2":
                 InputOutput.printLN("Enter number of players 2-4:");
@@ -32,7 +32,7 @@ public class Game {
                     String s = InputOutput.input("234");
                     nPlayers = Integer.parseInt(s);
                 } while (nPlayers < 2 || nPlayers > 4);
-                newGame(nPlayers,false,100);
+                newGame(nPlayers,false);
                 break;
             case "0":
                 return false;

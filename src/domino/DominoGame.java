@@ -16,9 +16,8 @@ public abstract class DominoGame implements DominoGameInterface {
     private int chainLeftNumber;
     private int chainRightNumber;
 
-    public DominoGame(int numberOfPlayers, boolean isTeamGame, int targetPoints) {
+    public DominoGame(int numberOfPlayers, boolean isTeamGame) {
         this.isTeamGame = isTeamGame;
-        this.targetPoints = targetPoints;
         this.firstEverTurn=true;
         this.tilePool = new ArrayList<>();
         this.tilesPlayed = new ArrayList<>();
