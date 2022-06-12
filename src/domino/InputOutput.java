@@ -47,4 +47,13 @@ public class InputOutput {
         } while (!filter.contains(s) || s.length() != 1);
         return s;
     }
+
+    public static int numberOfPlayers() {
+        int nPlayers;
+        do {
+            String s = InputOutput.input("234");
+            nPlayers = Integer.parseInt(s);
+        } while (nPlayers < 2 || nPlayers > 4);
+        return nPlayers;
+    }
 }

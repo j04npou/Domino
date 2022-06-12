@@ -108,11 +108,12 @@ public class DominoLatino extends DominoGame {
     public void showGameRules() {
         System.out.println( "Es pot jugar per parelles o indivdualment.\n" +
                             "L'objectius es arribar a 100 punts.\n" +
-                            "Sortida: A la primera partida comença el jugador que te el doble 6.\n" +
+                            "Sortida: A la primera partida comença el jugador que te el doble 6 \n" +
+                            "o doble inferior.\n" +
                             "Punts: La parella o el jugador guanyador acumula els punts que li \n" +
                             "queden per jugar a l'altre equip.\n" +
                             "Si hi ha empat a una tranca, a la modaditat en parelles guanya la \n" +
-                            "parella que era ma. Si era un joc individual ningú guanya punts.\n" );
+                            "parella que era ma. Si era un joc individual ningú guanya punts." );
     }
 
     @Override

@@ -319,6 +319,10 @@ public abstract class DominoGame implements DominoGameInterface {
     public void gameplay() {
         boolean exitGame = false;
         playerTurn = 0;
+        InputOutput.printLN("~".repeat(60));
+        InputOutput.printLN(getGameName().toUpperCase());
+        showGameRules();
+        InputOutput.printLN("~".repeat(60));
         do {
             playerPassCounter = 0;
             // Inicialitzam i repartim fitxes
