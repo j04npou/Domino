@@ -1,9 +1,10 @@
 package domino;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class DominoGame implements DominoGameInterface {
+public abstract class DominoGame implements DominoGameInterface, Serializable {
     protected ArrayList<Tile> tilePool;
     private ArrayList<Tile> tilesPlayed;
     public ArrayList<Player> players;
@@ -15,6 +16,7 @@ public abstract class DominoGame implements DominoGameInterface {
     protected int playerPassCounter;
     private int chainLeftNumber;
     private int chainRightNumber;
+    public boolean serialized;
 
     public DominoGame(int numberOfPlayers, boolean isTeamGame) {
         this.isTeamGame = isTeamGame;
@@ -22,6 +24,7 @@ public abstract class DominoGame implements DominoGameInterface {
         this.tilePool = new ArrayList<>();
         this.tilesPlayed = new ArrayList<>();
         this.players = new ArrayList<>();
+        this.serialized = false;
 
         // Cream els equips/jugadors
         initPlayers(numberOfPlayers, isTeamGame);
@@ -241,8 +244,10 @@ public abstract class DominoGame implements DominoGameInterface {
         if (possibleMoves.replace(" ", "").length() > 0) {
             // demanam fitxa a posar
             int inputMove = InputOutput.choseNumberFromList(possibleMoves);
-            if (inputMove == 0)
+            if (inputMove == 0) {
+                serialized = true;
                 return true;
+            }
             else {
                 // colocam fitxa a la cadena
                 putTile(players.get(playerTurn-1), inputMove - 1);

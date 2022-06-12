@@ -1,5 +1,7 @@
 import domino.*;
 
+import java.io.*;
+
 public class Game {
     public static void main(String[] args) {
         boolean exit = false;
@@ -43,6 +45,20 @@ public class Game {
                 return false;
         }
         domino.gameplay();
+        if (domino.serialized) {
+            InputOutput.printLN("Do you want to save this game? (Y/N)");
+            String s=InputOutput.input("YNyn").toUpperCase();
+            if (s.equals("Y")){
+                try {
+                    ObjectOutputStream writeFile = new ObjectOutputStream(new FileOutputStream("/tmp/save.dat"));
+                    writeFile.writeObject(domino);
+                    writeFile.close();
+                }catch (Exception e){
+
+                }
+            }
+        }
+
         return true;
     }
 }
