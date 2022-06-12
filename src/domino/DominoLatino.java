@@ -7,7 +7,7 @@ public class DominoLatino extends DominoGame {
     }
 
     @Override
-    public int findTrancaWinner() {
+    public int findTrancaWinnerTeam() {
         int[] teamPoints = new int[2];
         for (int i = 0; i < players.size(); i++) {
             teamPoints[players.get(i).playerTeam - 1] += players.get(i).countDots();
@@ -26,15 +26,48 @@ public class DominoLatino extends DominoGame {
     }
 
     @Override
-    public void countPoints() {
-        int winnerTeam = players.get(playerTurn-1).playerTeam;
-        int points = 0;
+    public int findTrancaWinnerPlayer() {
+        int minimumPoints = players.get(0).countDots();
+        int minimumPlayer = players.get(0).playerNumber;
+        boolean drawFlag = false;
 
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).playerTeam != winnerTeam)
-                points += players.get(i).countDots();
+        for (int i = 1; i < players.size(); i++) {
+            if (players.get(i).countDots() < minimumPoints) {
+                minimumPoints = players.get(i).countDots();
+                minimumPlayer = players.get(i).playerNumber;
+                drawFlag = false;
+            } else if (players.get(i).countDots() == minimumPoints) {
+                drawFlag = true;
+            }
         }
-        players.get(winnerTeam-1).points += points;
+        if (drawFlag)
+            // Si dos jugadors han empatat, no s'assignaran els punts a ningú
+            return 0;
+        else
+            return minimumPlayer;
+    }
+
+    @Override
+    public void countPoints() {
+        // Mostram qui ha guanyat
+        if (isTeamGame)
+            System.out.println("Winner team " + players.get(playerTurn-1).playerTeam);
+        else
+        if (playerTurn == 0)
+            System.out.println("DRAW, mo point for anyone");
+        else
+            System.out.println("Winner player " + players.get(playerTurn-1).playerNumber);
+
+        if (playerTurn != 0) {
+            int winnerTeam = players.get(playerTurn - 1).playerTeam;
+            int points = 0;
+
+            for (int i = 0; i < players.size(); i++) {
+                if (players.get(i).playerTeam != winnerTeam)
+                    points += players.get(i).countDots();
+            }
+            players.get(winnerTeam - 1).points += points;
+        }
     }
 
     @Override
@@ -79,10 +112,20 @@ public class DominoLatino extends DominoGame {
     }
 
     @Override
-    public boolean playerCantMove() {
-        System.out.println("Pass.");
-        playerPassCounter++;
-        return true;
-        // valorar que si es partida de menys de 4 jugadors s'han d'agafar fitxes del munt
+    public void playerCantMove() {
+        boolean tilePlaced = false;
+
+        if (tilePool.size() > 0) {
+            do {
+                System.out.println("Getting tile from pool");
+                getRandomTile(players.get(playerTurn-1));
+                tilePlaced = poolTileCanBePlaced();
+            } while (tilePool.size() > 0 && !tilePlaced);
+        }
+
+        if (!tilePlaced){
+            System.out.println("Pass.");
+            playerPassCounter++;
+        }
     }
 }

@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="aa009798-5821-4746-991f-f19667d4f618" name="Changes" comment="Reordered and improved win messages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoGameInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/domino/DominoLatino.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/DominoLatino.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domino/InputOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domino/InputOutput.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +80,7 @@
       <workItem from="1654668785538" duration="6937000" />
       <workItem from="1654708285392" duration="996000" />
       <workItem from="1654963989812" duration="18006000" />
+      <workItem from="1655030326292" duration="8727000" />
     </task>
     <task id="LOCAL-00001" summary="Initializated Tile object">
       <created>1654426444067</created>
@@ -258,11 +258,6 @@
           <properties class="java.lang.IndexOutOfBoundsException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/domino/Player.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
