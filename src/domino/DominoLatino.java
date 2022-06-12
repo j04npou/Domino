@@ -7,39 +7,94 @@ public class DominoLatino extends DominoGame {
     }
 
     @Override
-    public boolean checkTotalWin() {
+    public int findTrancaWinnerTeam() {
+        int[] teamPoints = new int[2];
         for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).points >= targetPoints){
-                System.out.println("Team " + players.get(i).playerTeam + " WINS");
-                return true;
-            }
+            teamPoints[players.get(i).playerTeam - 1] += players.get(i).countDots();
         }
-        return false;
+        if (teamPoints[0] > teamPoints[1])
+            return 2;
+        else if (teamPoints[0] < teamPoints[1])
+            return 1;
+        else {
+            // En cas d'empat guanya el jugador que havia començat la partida
+            if (nextRoundTurn-1 < 1)
+                return players.size();
+            else
+                return nextRoundTurn-1;
+        }
     }
 
     @Override
-    public int countPoints() {
-        return 0;
+    public int findTrancaWinnerPlayer() {
+        int minimumPoints = players.get(0).countDots();
+        int minimumPlayer = players.get(0).playerNumber;
+        boolean drawFlag = false;
+
+        for (int i = 1; i < players.size(); i++) {
+            if (players.get(i).countDots() < minimumPoints) {
+                minimumPoints = players.get(i).countDots();
+                minimumPlayer = players.get(i).playerNumber;
+                drawFlag = false;
+            } else if (players.get(i).countDots() == minimumPoints) {
+                drawFlag = true;
+            }
+        }
+        if (drawFlag)
+            // Si dos jugadors han empatat, no s'assignaran els punts a ningú
+            return 0;
+        else
+            return minimumPlayer;
+    }
+
+    @Override
+    public void countPoints() {
+        // Mostram qui ha guanyat
+        if (isTeamGame)
+            System.out.println("Winner team " + players.get(playerTurn-1).playerTeam);
+        else
+        if (playerTurn == 0)
+            System.out.println("DRAW, mo point for anyone");
+        else
+            System.out.println("Winner player " + players.get(playerTurn-1).playerNumber);
+
+        if (playerTurn != 0) {
+            int winnerTeam = players.get(playerTurn - 1).playerTeam;
+            int points = 0;
+
+            for (int i = 0; i < players.size(); i++) {
+                if (players.get(i).playerTeam != winnerTeam)
+                    points += players.get(i).countDots();
+            }
+            players.get(winnerTeam - 1).points += points;
+        }
     }
 
     @Override
     public void makeFirstEverMoveTurn() {
         // Si es la primera partida, cercam jugador que compleixi la condició, posa sa fitxa i pasa el torn al següent.
 
-        // cercam jugador amb doble 6
-        for (int i = 1; i <= players.size() ; i++) {
-            Player tmpPlayer = players.get(i-1);
-            // Comprovam si aquest jugador compleix la condició d'esser el primer en jugar
-            if ( hasDouble(6, tmpPlayer.playerTiles) ) {
-                // posam la fitxa en joc i la llevam del jugador
-                putTile(tmpPlayer, findPositionDouble(6, tmpPlayer.playerTiles));
-                // Guardam el torn d'aquesta partida per continuar rotant a les següents
-                playerTurn = i+1;
-                if ( playerTurn > players.size() )
-                    playerTurn = 1;
-                nextRoundTurn = playerTurn;
-                break;
+        boolean moveDone = false;
+
+        for (int doubleTile = 6; doubleTile >= 0; doubleTile--) {
+            // cercam jugador amb doble 6 o doble per ordre decreixent
+            for (int i = 1; i <= players.size(); i++) {
+                Player tmpPlayer = players.get(i - 1);
+                // Comprovam si aquest jugador compleix la condició de ser el primer en jugar
+                if (tmpPlayer.hasDouble(doubleTile)) {
+                    // posam la fitxa en joc i la llevam del jugador
+                    putTile(tmpPlayer, tmpPlayer.findPositionDouble(doubleTile));
+                    // Guardam el torn d'aquesta partida per continuar rotant a les següents
+                    nextRoundTurn = i;
+                    playerTurn = i + 1;
+                    if (playerTurn > players.size())
+                        playerTurn = 1;
+                    moveDone = true;
+                    break;
+                }
             }
+            if (moveDone)
+                break;
         }
     }
 
@@ -50,14 +105,27 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public void showGameRules() {
-        System.out.println("Només per parelles...");
+        System.out.println( "Dos equips de dos jugadors cada un.\n" +
+                            "L'objectius es arribar a 100 punts.\n" +
+                            "Sortida: A la primera partida comença el jugador que te el doble 6.\n" +
+                            "Punts: L'equip guanyador acumula els punts que li queden per jugar a l'altre equip." );
     }
 
     @Override
-    public boolean playerCantMove() {
-        System.out.println("Pasa.");
-        playerPassCounter++;
-        return true;
-        // valorar que si es partida de menys de 4 jugadors s'han d'agafar fitxes del munt
+    public void playerCantMove() {
+        boolean tilePlaced = false;
+
+        if (tilePool.size() > 0) {
+            do {
+                System.out.println("Getting tile from pool");
+                getRandomTile(players.get(playerTurn-1));
+                tilePlaced = poolTileCanBePlaced();
+            } while (tilePool.size() > 0 && !tilePlaced);
+        }
+
+        if (!tilePlaced){
+            System.out.println("Pass.");
+            playerPassCounter++;
+        }
     }
 }

@@ -6,7 +6,7 @@ public class InputOutput {
     public static int choseNumberFromList(String validValues){
         Scanner in = new Scanner(System.in);
         System.out.println(validValues);
-        System.out.println("0: Cancel·lar partida. Introdueix moviment: ");
+        System.out.println("0: Exit game.");
         validValues = validValues.concat("0");
         String s;
         do {
@@ -17,7 +17,7 @@ public class InputOutput {
 
     public static String askLeftOrRight(){
         Scanner in = new Scanner(System.in);
-        System.out.println("Introdueix moviment: 'L' o 'R'");
+        System.out.println("Chose move: 'L' o 'R'");
         String validValues = "LRlr";
         String s;
         do {

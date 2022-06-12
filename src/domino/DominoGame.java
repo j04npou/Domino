@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class DominoGame implements DominoGameInterface {
-    private ArrayList<Tile> tilePool;
+    protected ArrayList<Tile> tilePool;
     private ArrayList<Tile> tilesPlayed;
     public ArrayList<Player> players;
     protected int targetPoints;
-    private boolean isTeamGame;
+    protected boolean isTeamGame;
     public int playerTurn;
     public int nextRoundTurn;
     private boolean firstEverTurn;
@@ -49,6 +49,7 @@ public abstract class DominoGame implements DominoGameInterface {
     }
 
     private void initTilePool() {
+        tilePool.clear();
         // Cream totes les fitxes i les posam al munt
         for (int x = 0; x <= 6; x++) {
             for (int y = 0; y <= x; y++) {
@@ -72,6 +73,12 @@ public abstract class DominoGame implements DominoGameInterface {
             getRandomTiles(players.get(i));
         }
     }
+    protected void getRandomTile(Player player) {
+        Random rand = new Random();
+        int int_random = rand.nextInt(tilePool.size());
+        player.playerTiles.add(tilePool.get(int_random));
+        tilePool.remove(int_random);
+    }
 
     private void getRandomTiles(Player player) {
         Random rand = new Random();
@@ -82,10 +89,23 @@ public abstract class DominoGame implements DominoGameInterface {
         }
     }
 
+    protected boolean poolTileCanBePlaced() {
+        String possibleMoves = checkPossibleMoves(players.get(playerTurn-1).playerTiles);
+        if (possibleMoves.replace(" ", "").length() > 0) {
+
+            // colocam fitxa a la cadena
+            putTile(players.get(playerTurn-1), Integer.parseInt( possibleMoves.replace(" ", "") ) - 1);
+            playerPassCounter = 0;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private void showTeams() {
         if (isTeamGame) {
             for (int i = 1; i <= 2; i++) {
-                System.out.println("Team " + i + ":");
+                System.out.println("Team " + i + " (Points: " + players.get(i-1).points + ") :");
                 for (int j = 0; j < players.size(); j++) {
                     if (players.get(j).playerTeam == i) {
                         System.out.print("\tPlayer " + players.get(j).playerNumber + " ");
@@ -95,9 +115,11 @@ public abstract class DominoGame implements DominoGameInterface {
             }
         } else {
             for (int j = 0; j < players.size(); j++) {
-                System.out.print("Player " + players.get(j).playerNumber + " ");
+                System.out.print("Player " + players.get(j).playerNumber + " (Points:" + players.get(j).points + "): ");
                 showTiles(players.get(j).playerTiles, true);
             }
+            System.out.print("Pool: ");
+            showTiles(tilePool,true);
         }
     }
 
@@ -107,25 +129,6 @@ public abstract class DominoGame implements DominoGameInterface {
             firstEverTurn = false;
             makeFirstEverMoveTurn();
         }
-        // FALTA COMPLETAR EL PRIMER MOVIMENT DE LES SEGUENTS PARTIDES
-    }
-
-    public boolean hasDouble(int doubleTile, ArrayList<Tile> playerTiles) {
-        for (int i = 0; i < playerTiles.size() ; i++) {
-            if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int findPositionDouble(int doubleTile, ArrayList<Tile> playerTiles) {
-        for (int i = 0; i < playerTiles.size() ; i++) {
-            if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public void putTile(Player tmpPlayer, int playerTilePosition) {
@@ -140,10 +143,14 @@ public abstract class DominoGame implements DominoGameInterface {
             // posteriors fitxes
             boolean isLeft = checkIsLeftMove(tmpPlayer.playerTiles.get(playerTilePosition));
             if (!isLeft) {
+                if ( tmpPlayer.playerTiles.get(playerTilePosition).getTileDotsLeft() != chainRightNumber )
+                    swapTileDots(tmpPlayer.playerTiles.get(playerTilePosition));
                 chainRightNumber = tmpPlayer.playerTiles.get(playerTilePosition).getTileDotsRight();
                 // posam la fitxa al joc a la dreta
                 tilesPlayed.add(tmpPlayer.playerTiles.get(playerTilePosition));
             } else {
+                if ( tmpPlayer.playerTiles.get(playerTilePosition).getTileDotsRight() != chainLeftNumber )
+                    swapTileDots(tmpPlayer.playerTiles.get(playerTilePosition));
                 chainLeftNumber = tmpPlayer.playerTiles.get(playerTilePosition).getTileDotsLeft();
                 // posam la fitxa al joc a l'esquerra
                 tilesPlayed.add(0,tmpPlayer.playerTiles.get(playerTilePosition));
@@ -161,17 +168,15 @@ public abstract class DominoGame implements DominoGameInterface {
             leftPossible = true;
         if ( tile.getTileDotsLeft() == chainRightNumber || tile.getTileDotsRight() == chainRightNumber )
             rightPossible = true;
+
         String response = "";
         if (chainLeftNumber != chainRightNumber) {
             if (leftPossible && rightPossible)
                 response = InputOutput.askLeftOrRight();
             if (response.equals("L") || (response.equals("") && leftPossible)) {
-                if ( tile.getTileDotsRight() != chainLeftNumber )
-                    swapTileDots(tile);
+
                 return true;
             } else {
-                if ( tile.getTileDotsLeft() != chainRightNumber )
-                    swapTileDots(tile);
                 return false;
             }
         }
@@ -201,7 +206,7 @@ public abstract class DominoGame implements DominoGameInterface {
     private int findPlayerWithNoTiles() {
         for (int playerNumber = 0; playerNumber < players.size(); playerNumber++) {
             if (players.get(playerNumber).playerTiles.size() == 0) {
-                return playerNumber;
+                return players.get(playerNumber).playerNumber;
             }
         }
         return 0;
@@ -245,7 +250,7 @@ public abstract class DominoGame implements DominoGameInterface {
             }
             playerPassCounter = 0;
         } else {
-            // Passam
+            // Passam o agafam del munt
             playerCantMove();
         }
         return false;
@@ -253,22 +258,39 @@ public abstract class DominoGame implements DominoGameInterface {
 
     private String checkPossibleMoves(ArrayList<Tile> array) {
         String tmpMoves = "";
-        for (int i = 0; i < array.size(); i++) {
-            if (    array.get(i).getTileDotsLeft() == chainLeftNumber ||
-                    array.get(i).getTileDotsLeft() == chainRightNumber ||
-                    array.get(i).getTileDotsRight() == chainLeftNumber ||
-                    array.get(i).getTileDotsRight() == chainRightNumber
-            ){
-                tmpMoves = tmpMoves.concat((i + 1) + " ");
+        if (tilesPlayed.size() == 0) {
+            // A partir de la segona ma
+            if (players.get(playerTurn-1).hasDouble()) {
+                // pinta numeros dels dobles
+                for (int i = 0; i < array.size(); i++) {
+                    if (array.get(i).getTileDotsLeft() == array.get(i).getTileDotsRight())
+                        tmpMoves = tmpMoves.concat((i+1) + " ");
+                    else
+                        tmpMoves = tmpMoves.concat("   ");
+                }
             } else {
-                tmpMoves = tmpMoves.concat("   ");
+                // pinta tots els numeros
+                tmpMoves = "1  2 3  4  5 6  7";
+            }
+        } else {
+            // Seguents moviments
+            for (int i = 0; i < array.size(); i++) {
+                if (array.get(i).getTileDotsLeft() == chainLeftNumber ||
+                        array.get(i).getTileDotsLeft() == chainRightNumber ||
+                        array.get(i).getTileDotsRight() == chainLeftNumber ||
+                        array.get(i).getTileDotsRight() == chainRightNumber
+                ) {
+                    tmpMoves = tmpMoves.concat((i + 1) + " ");
+                } else {
+                    tmpMoves = tmpMoves.concat("   ");
+                }
             }
         }
         return tmpMoves;
     }
 
     private void showGame() {
-        System.out.println("Fitxes jugades:");
+        System.out.println("Tiles played:");
         for (int i = 0; i < tilesPlayed.size(); i++) {
             System.out.print(tilesPlayed.get(i));
         }
@@ -279,6 +301,20 @@ public abstract class DominoGame implements DominoGameInterface {
         for (int i = 0; i < players.size(); i++) {
             players.get(i).playerTiles.clear();
         }
+    }
+
+    public boolean checkTotalWin() {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).points >= targetPoints){
+                showTeams();
+                if (isTeamGame)
+                    System.out.println("Team " + players.get(i).playerTeam + " WINS");
+                else
+                    System.out.println("Player " + players.get(i).playerNumber + " WINS");
+                return true;
+            }
+        }
+        return false;
     }
 
     public void gameplay() {
@@ -294,19 +330,25 @@ public abstract class DominoGame implements DominoGameInterface {
 
             // Assignam qui comença aquesta partida
             playerTurn = nextRoundTurn++;
+            if (nextRoundTurn > 4)
+                nextRoundTurn = 1;
             do {
-                game();
+                exitGame = game();
                 System.out.println("----------------------------------------------------------------------------");
-            }while (!checkEndGame() && !exitGame);
+            } while (!checkEndGame() && !exitGame);
 
-            if ( playerPassCounter >= players.size() ) {
-                // Cercar guanyador: playerTurn = findTrancaWinner();
+            if (!exitGame) {
+                if (playerPassCounter >= players.size()) {
+                    if (isTeamGame)
+                        playerTurn = findTrancaWinnerTeam();
+                    else
+                        playerTurn = findTrancaWinnerPlayer();
+                }
+
+                // Contam punts
+                countPoints();
+                System.out.println("----------------------------------------------------------------------------");
             }
-            System.out.println("Guanyador " + playerTurn);
-
-            // Contam punts
-            countPoints();
-            System.out.println("----------------------------------------------------------------------------");
 
         }while (!checkTotalWin() && !exitGame);
     }
