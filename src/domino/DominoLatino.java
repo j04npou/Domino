@@ -68,7 +68,7 @@ public class DominoLatino extends DominoGame {
         if (isTeamGame)
             InputOutput.printLN("Winner team " + players.get(playerTurn-1).playerTeam);
         else if (playerTurn == 0)
-            InputOutput.printLN("DRAW, mo point for anyone");
+            InputOutput.printLN("DRAW, no points for anyone");
         else
             InputOutput.printLN("Winner player " + players.get(playerTurn-1).playerNumber);
     }
