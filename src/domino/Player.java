@@ -32,7 +32,8 @@ public class Player {
         return false;
     }
 
-    public boolean hasDouble() {
+    public boolean hasAnyDouble() {
+        // Comprovem si te qualsevol doble
         for (int i = 0; i < playerTiles.size() ; i++) {
             if ( playerTiles.get(i).getTileDotsLeft() == playerTiles.get(i).getTileDotsRight()) {
                 return true;

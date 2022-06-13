@@ -45,6 +45,7 @@ public class Game {
                 return false;
         }
         domino.gameplay();
+        /*
         if (domino.serialized) {
             InputOutput.printLN("Do you want to save this game? (Y/N)");
             String s=InputOutput.input("YNyn").toUpperCase();
@@ -58,6 +59,7 @@ public class Game {
                 }
             }
         }
+        */
 
         return true;
     }

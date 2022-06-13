@@ -264,7 +264,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         String tmpMoves = "";
         if (tilesPlayed.size() == 0) {
             // A partir de la segona ma
-            if (players.get(playerTurn-1).hasDouble()) {
+            if (players.get(playerTurn-1).hasAnyDouble()) {
                 // pinta numeros dels dobles
                 for (int i = 0; i < array.size(); i++) {
                     if (array.get(i).getTileDotsLeft() == array.get(i).getTileDotsRight())
