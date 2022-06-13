@@ -8,6 +8,8 @@ public interface DominoGameInterface {
     String getGameName();
     void showGameRules();
     void playerCantMove();
-    String tilesReverseH = "\uD83C\uDC30";
+    void whoIsTheWinner();
+
+//    String tilesReverseH = "\uD83C\uDC30";
     String tilesReverseV = "\uD83C\uDC62";
 }

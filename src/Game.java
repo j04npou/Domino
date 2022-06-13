@@ -1,19 +1,12 @@
 import domino.*;
 
-import java.io.*;
-
 public class Game {
     public static void main(String[] args) {
-        boolean exit = false;
+        boolean exit;
         do {
             exit = menu();
             InputOutput.printLN();
         } while (exit);
-    }
-
-    public static void newGame(int numberOfPlayers, boolean isTeamGame) {
-        DominoGame domino = new DominoLatino(numberOfPlayers,isTeamGame);
-        domino.gameplay();
     }
 
     private static boolean menu() {
@@ -44,7 +37,10 @@ public class Game {
             case "0":
                 return false;
         }
-        domino.gameplay();
+        if (domino != null)
+            domino.gameplay();
+        else
+            InputOutput.printLN("⛔ Unexpected error. ⛔");
         /*
         if (domino.serialized) {
             InputOutput.printLN("Do you want to save this game? (Y/N)");

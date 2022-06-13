@@ -50,15 +50,6 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public void countPoints() {
-        // Mostram qui ha guanyat
-        if (isTeamGame)
-            System.out.println("Winner team " + players.get(playerTurn-1).playerTeam);
-        else
-        if (playerTurn == 0)
-            System.out.println("DRAW, mo point for anyone");
-        else
-            System.out.println("Winner player " + players.get(playerTurn-1).playerNumber);
-
         if (playerTurn != 0) {
             int winnerTeam = players.get(playerTurn - 1).playerTeam;
             int points = 0;
@@ -69,6 +60,17 @@ public class DominoLatino extends DominoGame {
             }
             players.get(winnerTeam - 1).points += points;
         }
+    }
+
+    @Override
+    public void whoIsTheWinner() {
+        // Mostram qui ha guanyat
+        if (isTeamGame)
+            InputOutput.printLN("Winner team " + players.get(playerTurn-1).playerTeam);
+        else if (playerTurn == 0)
+            InputOutput.printLN("DRAW, mo point for anyone");
+        else
+            InputOutput.printLN("Winner player " + players.get(playerTurn-1).playerNumber);
     }
 
     @Override
@@ -106,7 +108,7 @@ public class DominoLatino extends DominoGame {
 
     @Override
     public void showGameRules() {
-        System.out.println( "Es pot jugar per parelles o indivdualment.\n" +
+        InputOutput.printLN( "Es pot jugar per parelles o indivdualment.\n" +
                             "L'objectius es arribar a 100 punts.\n" +
                             "Sortida: A la primera partida comença el jugador que te el doble 6 \n" +
                             "o doble inferior.\n" +
@@ -122,14 +124,14 @@ public class DominoLatino extends DominoGame {
 
         if (tilePool.size() > 0) {
             do {
-                System.out.println("Getting tile from pool");
+                InputOutput.printLN("Getting tile from pool");
                 getRandomTile(players.get(playerTurn-1));
                 tilePlaced = poolTileCanBePlaced();
             } while (tilePool.size() > 0 && !tilePlaced);
         }
 
         if (!tilePlaced){
-            System.out.println("Pass.");
+            InputOutput.printLN("Pass.");
             playerPassCounter++;
         }
     }
