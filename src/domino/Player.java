@@ -3,10 +3,10 @@ package domino;
 import java.util.ArrayList;
 
 public class Player {
-    public int playerNumber;
-    public int playerTeam;
-    public ArrayList<Tile> playerTiles;
-    public int points;
+    protected int playerNumber;
+    protected int playerTeam;
+    protected ArrayList<Tile> playerTiles;
+    protected int points;
 
     public Player(int playerNumber, int playerTeam) {
         this.playerNumber = playerNumber;
@@ -15,7 +15,7 @@ public class Player {
         this.playerTiles = new ArrayList<>();
     }
 
-    public int countDots() {
+    protected int countDots() {
         int dots = 0;
         for (int i = 0; i < playerTiles.size(); i++) {
             dots += playerTiles.get(i).getTileDotsLeft() + playerTiles.get(i).getTileDotsRight();
@@ -23,7 +23,7 @@ public class Player {
         return dots;
     }
 
-    public boolean hasDouble(int doubleTile) {
+    protected boolean hasDouble(int doubleTile) {
         for (int i = 0; i < playerTiles.size() ; i++) {
             if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
                 return true;
@@ -32,7 +32,8 @@ public class Player {
         return false;
     }
 
-    public boolean hasDouble() {
+    protected boolean hasAnyDouble() {
+        // Comprovem si te qualsevol doble
         for (int i = 0; i < playerTiles.size() ; i++) {
             if ( playerTiles.get(i).getTileDotsLeft() == playerTiles.get(i).getTileDotsRight()) {
                 return true;
@@ -41,7 +42,7 @@ public class Player {
         return false;
     }
 
-    public int findPositionDouble(int doubleTile) {
+    protected int findPositionDouble(int doubleTile) {
         for (int i = 0; i < playerTiles.size() ; i++) {
             if ( playerTiles.get(i).getTileDotsLeft() == doubleTile && playerTiles.get(i).getTileDotsRight() == doubleTile ) {
                 return i;
@@ -50,6 +51,7 @@ public class Player {
         return -1;
     }
 
+    @Override
     public String toString(){
         return "Jugador " + this.playerNumber;
     }

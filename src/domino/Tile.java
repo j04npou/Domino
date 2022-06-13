@@ -3,7 +3,7 @@ package domino;
 public class Tile {
     private int tileDotsLeft;
     private int tileDotsRight;
-    String[][] tilesH = {
+    protected final String[][] tilesH = {
             { "\uD83C\uDC31", "\uD83C\uDC32", "\uD83C\uDC33", "\uD83C\uDC34", "\uD83C\uDC35", "\uD83C\uDC36", "\uD83C\uDC37" },
             { "\uD83C\uDC38", "\uD83C\uDC39", "\uD83C\uDC3A", "\uD83C\uDC3B", "\uD83C\uDC3C", "\uD83C\uDC3D", "\uD83C\uDC3E" },
             { "\uD83C\uDC3F", "\uD83C\uDC40", "\uD83C\uDC41", "\uD83C\uDC42", "\uD83C\uDC43", "\uD83C\uDC44", "\uD83C\uDC45" },
@@ -12,7 +12,7 @@ public class Tile {
             { "\uD83C\uDC54", "\uD83C\uDC55", "\uD83C\uDC56", "\uD83C\uDC57", "\uD83C\uDC58", "\uD83C\uDC59", "\uD83C\uDC5A" },
             { "\uD83C\uDC5B", "\uD83C\uDC5C", "\uD83C\uDC5D", "\uD83C\uDC5E", "\uD83C\uDC5F", "\uD83C\uDC60", "\uD83C\uDC61" }
     };
-    String[][] tilesV = {
+    protected final String[][] tilesV = {
             { "\uD83C\uDC63", "\uD83C\uDC64", "\uD83C\uDC65", "\uD83C\uDC66", "\uD83C\uDC67", "\uD83C\uDC68", "\uD83C\uDC69" },
             { "\uD83C\uDC6A", "\uD83C\uDC6B", "\uD83C\uDC6C", "\uD83C\uDC6D", "\uD83C\uDC6E", "\uD83C\uDC6F", "\uD83C\uDC70" },
             { "\uD83C\uDC71", "\uD83C\uDC72", "\uD83C\uDC73", "\uD83C\uDC74", "\uD83C\uDC75", "\uD83C\uDC76", "\uD83C\uDC77" },
@@ -27,19 +27,19 @@ public class Tile {
         this.setTileDotsRight(tileDotsRight);
     }
 
-    public int getTileDotsLeft() {
+    protected int getTileDotsLeft() {
         return tileDotsLeft;
     }
 
-    public void setTileDotsLeft(int tileDotsLeft) {
+    protected void setTileDotsLeft(int tileDotsLeft) {
         this.tileDotsLeft = tileDotsLeft;
     }
 
-    public int getTileDotsRight() {
+    protected int getTileDotsRight() {
         return tileDotsRight;
     }
 
-    public void setTileDotsRight(int tileDotsRight) {
+    protected void setTileDotsRight(int tileDotsRight) {
         this.tileDotsRight = tileDotsRight;
     }
 
@@ -51,7 +51,7 @@ public class Tile {
             return tilesH[tileDotsLeft][tileDotsRight];
     }
 
-    public String showHtile() {
+    protected String showHtile() {
         return tilesH[tileDotsLeft][tileDotsRight];
     }
 }
