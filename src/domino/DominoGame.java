@@ -16,7 +16,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
     protected int playerPassCounter;
     private int chainLeftNumber;
     private int chainRightNumber;
-//    public boolean serialized;
+    public boolean serialized;
 
     public DominoGame(int numberOfPlayers, boolean isTeamGame) {
         this.isTeamGame = isTeamGame;
@@ -24,7 +24,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         this.tilePool = new ArrayList<>();
         this.tilesPlayed = new ArrayList<>();
         this.players = new ArrayList<>();
-//        this.serialized = false;
+        this.serialized = false;
 
         // Cream els equips/jugadors
         initPlayers(numberOfPlayers, isTeamGame);
@@ -60,7 +60,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         }
     }
 
-    private void showTiles(ArrayList<Tile> array, boolean hidden){
+    protected void showTiles(ArrayList<Tile> array, boolean hidden){
         for (int i = 0; i < array.size(); i++) {
             if (hidden)
                 InputOutput.print(tilesReverseV);
@@ -106,23 +106,31 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
 
     private void showTeams() {
         if (isTeamGame) {
-            for (int i = 1; i <= 2; i++) {
-                InputOutput.printLN("Team " + i + " (Points: " + players.get(i-1).points + ") :");
-                for (int j = 0; j < players.size(); j++) {
-                    if (players.get(j).playerTeam == i) {
-                        InputOutput.print("\tPlayer " + players.get(j).playerNumber + " ");
-                        showTiles(players.get(j).playerTiles, true);
-                    }
+            displayTeams();
+        } else {
+            displayPlayers();
+        }
+    }
+
+    protected void displayTeams() {
+        for (int i = 1; i <= 2; i++) {
+            InputOutput.printLN("Team " + i + " (Points: " + players.get(i-1).points + ") :");
+            for (int j = 0; j < players.size(); j++) {
+                if (players.get(j).playerTeam == i) {
+                    InputOutput.print("\tPlayer " + players.get(j).playerNumber + " ");
+                    showTiles(players.get(j).playerTiles, true);
                 }
             }
-        } else {
-            for (int j = 0; j < players.size(); j++) {
-                InputOutput.print("Player " + players.get(j).playerNumber + " (Points:" + players.get(j).points + "): ");
-                showTiles(players.get(j).playerTiles, true);
-            }
-            InputOutput.print("Pool: ");
-            showTiles(tilePool,true);
         }
+    }
+
+    protected void displayPlayers() {
+        for (int j = 0; j < players.size(); j++) {
+            InputOutput.print("Player " + players.get(j).playerNumber + " (Points:" + players.get(j).points + "): ");
+            showTiles(players.get(j).playerTiles, true);
+        }
+        InputOutput.print("Pool: ");
+        showTiles(tilePool,true);
     }
 
     private void firstMove() {
@@ -237,7 +245,8 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
             // demanam fitxa a posar
             int inputMove = InputOutput.choseNumberFromList(possibleMoves);
             if (inputMove == 0) {
-//                serialized = true;
+                serialized = true;
+                playerTurn--;
                 return true;
             }
             else {
@@ -293,7 +302,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         InputOutput.printLN();
     }
 
-    private void clearPlayerTiles(){
+    protected void clearPlayerTiles(){
         for (int i = 0; i < players.size(); i++) {
             players.get(i).playerTiles.clear();
         }
@@ -315,23 +324,32 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
 
     public void gameplay() {
         boolean exitGame;
-        playerTurn = 0;
-        InputOutput.printLN("~".repeat(60));
-        InputOutput.printLN(getGameName().toUpperCase());
-        showGameRules();
-        InputOutput.printLN("~".repeat(60));
+        if (!serialized) {
+            playerTurn = 0;
+            InputOutput.printLN("~".repeat(60));
+            InputOutput.printLN(getGameName().toUpperCase());
+            showGameRules();
+            InputOutput.printLN("~".repeat(60));
+        } else {
+            InputOutput.printLN("Continuing saved game " + getGameName().toUpperCase());
+        }
         do {
-            playerPassCounter = 0;
-            // Inicialitzam i repartim fitxes
-            tilesPlayed.clear();
-            clearPlayerTiles();
-            initTilePool();
-            dealTiles();
+            if (!serialized) {
+                playerPassCounter = 0;
+                // Inicialitzam i repartim fitxes
+                tilesPlayed.clear();
+                clearPlayerTiles();
+                initTilePool();
+                dealTiles();
 
-            // Assignam qui comença aquesta partida
-            playerTurn = nextRoundTurn++;
-            if (nextRoundTurn > 4)
-                nextRoundTurn = 1;
+                // Assignam qui comença aquesta partida
+                playerTurn = nextRoundTurn++;
+                if (nextRoundTurn > 4)
+                    nextRoundTurn = 1;
+            } else {
+                serialized = false;
+            }
+
             do {
                 exitGame = game();
                 InputOutput.printLN("----------------------------------------------------------------------------");
