@@ -16,7 +16,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
     protected int playerPassCounter;
     private int chainLeftNumber;
     private int chainRightNumber;
-//    public boolean serialized;
+    public boolean serialized;
 
     public DominoGame(int numberOfPlayers, boolean isTeamGame) {
         this.isTeamGame = isTeamGame;
@@ -24,7 +24,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         this.tilePool = new ArrayList<>();
         this.tilesPlayed = new ArrayList<>();
         this.players = new ArrayList<>();
-//        this.serialized = false;
+        this.serialized = false;
 
         // Cream els equips/jugadors
         initPlayers(numberOfPlayers, isTeamGame);
@@ -237,7 +237,8 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
             // demanam fitxa a posar
             int inputMove = InputOutput.choseNumberFromList(possibleMoves);
             if (inputMove == 0) {
-//                serialized = true;
+                serialized = true;
+                playerTurn--;
                 return true;
             }
             else {
@@ -315,23 +316,32 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
 
     public void gameplay() {
         boolean exitGame;
-        playerTurn = 0;
-        InputOutput.printLN("~".repeat(60));
-        InputOutput.printLN(getGameName().toUpperCase());
-        showGameRules();
-        InputOutput.printLN("~".repeat(60));
+        if (!serialized) {
+            playerTurn = 0;
+            InputOutput.printLN("~".repeat(60));
+            InputOutput.printLN(getGameName().toUpperCase());
+            showGameRules();
+            InputOutput.printLN("~".repeat(60));
+        } else {
+            InputOutput.printLN("Continuing saved game " + getGameName().toUpperCase());
+        }
         do {
-            playerPassCounter = 0;
-            // Inicialitzam i repartim fitxes
-            tilesPlayed.clear();
-            clearPlayerTiles();
-            initTilePool();
-            dealTiles();
+            if (!serialized) {
+                playerPassCounter = 0;
+                // Inicialitzam i repartim fitxes
+                tilesPlayed.clear();
+                clearPlayerTiles();
+                initTilePool();
+                dealTiles();
 
-            // Assignam qui comença aquesta partida
-            playerTurn = nextRoundTurn++;
-            if (nextRoundTurn > 4)
-                nextRoundTurn = 1;
+                // Assignam qui comença aquesta partida
+                playerTurn = nextRoundTurn++;
+                if (nextRoundTurn > 4)
+                    nextRoundTurn = 1;
+            } else {
+                serialized = false;
+            }
+
             do {
                 exitGame = game();
                 InputOutput.printLN("----------------------------------------------------------------------------");
