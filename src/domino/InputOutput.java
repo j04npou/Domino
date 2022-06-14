@@ -27,7 +27,7 @@ public class InputOutput {
     }
 
     public static void printLN(String inputText) {
-        // Imprimeix amb bot de linea
+        // Imprimeix amb bot de línia
         System.out.println(inputText);
     }
     public static void printLN() {

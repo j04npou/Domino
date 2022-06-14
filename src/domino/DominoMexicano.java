@@ -3,6 +3,13 @@ package domino;
 import java.util.Random;
 // Pedent: Inicialitzar les parelles per a partida individual i canvi de parella a cada ma
 public class DominoMexicano extends DominoGame {
+    private int round;
+    private final int[][] teamDistribution = {
+        {1, 1, 2, 2},
+        {1, 2, 1, 2},
+        {1, 2, 2, 1}
+    };
+
 
     public DominoMexicano(int numberOfPlayers, boolean isTeamGame) {
         super(numberOfPlayers, isTeamGame);
@@ -49,14 +56,14 @@ public class DominoMexicano extends DominoGame {
                 drawFlag = true;
             }
         }
-        if (drawFlag) {
+        if (drawFlag)  {
             // Si dos jugadors han empatat, contam les fitxes restants de cada jugador
             int minimumTiles = players.get(0).playerTiles.size();
             minimumPlayer = players.get(0).playerNumber;
             drawFlag = false;
 
             for (int i = 1; i < players.size(); i++) {
-                if (players.get(i).playerTiles.size() < minimumPoints) {
+                if (players.get(i).playerTiles.size() < minimumTiles) {
                     minimumTiles = players.get(i).playerTiles.size();
                     minimumPlayer = players.get(i).playerNumber;
                     drawFlag = false;
@@ -82,27 +89,37 @@ public class DominoMexicano extends DominoGame {
             }
             if (isTeamGame)
                 players.get(winnerTeam - 1).points += points;
-            else
-                players.get(playerTurn - 1).points += points;
+            else {
+                if (playerPassCounter >= players.size()) {
+                    for (int i = 0; i < players.size(); i++) {
+                        if (players.get(i).playerTeam == players.get(playerTurn - 1).playerTeam)
+                            players.get(i).points += points;
+                    }
+                }else
+                    players.get(playerTurn - 1).points += points;
+            }
         }
     }
 
     @Override
     public void whoIsTheWinner() {
         // Mostram qui ha guanyat
-        if (isTeamGame)
-            InputOutput.printLN("Winner team " + players.get(playerTurn-1).playerTeam);
-        else if (playerTurn == 0)
+        if (isTeamGame) {
+            InputOutput.printLN("Winner team " + players.get(playerTurn - 1).playerTeam);
+            nextRoundTurn = playerTurn -1;
+        }else if (playerTurn == 0) {
             InputOutput.printLN("DRAW, no points for anyone");
-        else
-            InputOutput.printLN("Winner player " + players.get(playerTurn-1).playerNumber);
+        }else {
+            InputOutput.printLN("Winner player " + players.get(playerTurn - 1).playerNumber);
+            nextRoundTurn = playerTurn -1;
+        }
     }
 
     @Override
     public void makeFirstEverMoveTurn() {
         // Si es la primera partida, cercam jugador aleatoriament, posa sa fitxa i pasa el torn al següent.
         Random rand = new Random();
-        playerTurn = rand.nextInt(players.size());
+        playerTurn = rand.nextInt(players.size())+1;
     }
 
     @Override
@@ -119,7 +136,10 @@ public class DominoMexicano extends DominoGame {
                             "Punts: La parella o el jugador guanyador acumula tots els punts que \n" +
                             "queden per jugar a tots els jugadors.\n" +
                             "Si hi ha empat a una tranca, guanya la parella \n" +
-                            "o el jugador que te menys fitxes. Si empaten, ningú guanya el punts." );
+                            "o el jugador que te menys fitxes. Si empaten, ningú guanya el punts.\n" +
+                            "Quan el mode de joc es individual i es guanya per tranca, els dos jugadors \n" +
+                            "del mateix equip sumaran el punts no jugats." +
+                            "El guanyador serà qui començarà la següent ma." );
     }
 
     @Override
@@ -139,4 +159,30 @@ public class DominoMexicano extends DominoGame {
             playerPassCounter++;
         }
     }
+
+    @Override
+    protected void clearPlayerTiles(){
+        super.clearPlayerTiles();
+        round++;
+        if (round >= teamDistribution.length)
+            round = 0;
+
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).playerTeam = teamDistribution[round][players.get(i).playerNumber-1];
+        }
+    }
+
+    @Override
+    protected void displayPlayers() {
+        for (int i = 1; i <= 2; i++) {
+            InputOutput.printLN("Team " + i);
+            for (int j = 0; j < players.size(); j++) {
+                if (players.get(j).playerTeam == i) {
+                    InputOutput.print("\tPlayer " + players.get(j).playerNumber + " (Points:" + players.get(j).points + "): ");
+                    showTiles(players.get(j).playerTiles, true);
+                }
+            }
+        }
+    }
+
 }

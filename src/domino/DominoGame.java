@@ -60,7 +60,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         }
     }
 
-    private void showTiles(ArrayList<Tile> array, boolean hidden){
+    protected void showTiles(ArrayList<Tile> array, boolean hidden){
         for (int i = 0; i < array.size(); i++) {
             if (hidden)
                 InputOutput.print(tilesReverseV);
@@ -106,23 +106,31 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
 
     private void showTeams() {
         if (isTeamGame) {
-            for (int i = 1; i <= 2; i++) {
-                InputOutput.printLN("Team " + i + " (Points: " + players.get(i-1).points + ") :");
-                for (int j = 0; j < players.size(); j++) {
-                    if (players.get(j).playerTeam == i) {
-                        InputOutput.print("\tPlayer " + players.get(j).playerNumber + " ");
-                        showTiles(players.get(j).playerTiles, true);
-                    }
+            displayTeams();
+        } else {
+            displayPlayers();
+        }
+    }
+
+    protected void displayTeams() {
+        for (int i = 1; i <= 2; i++) {
+            InputOutput.printLN("Team " + i + " (Points: " + players.get(i-1).points + ") :");
+            for (int j = 0; j < players.size(); j++) {
+                if (players.get(j).playerTeam == i) {
+                    InputOutput.print("\tPlayer " + players.get(j).playerNumber + " ");
+                    showTiles(players.get(j).playerTiles, true);
                 }
             }
-        } else {
-            for (int j = 0; j < players.size(); j++) {
-                InputOutput.print("Player " + players.get(j).playerNumber + " (Points:" + players.get(j).points + "): ");
-                showTiles(players.get(j).playerTiles, true);
-            }
-            InputOutput.print("Pool: ");
-            showTiles(tilePool,true);
         }
+    }
+
+    protected void displayPlayers() {
+        for (int j = 0; j < players.size(); j++) {
+            InputOutput.print("Player " + players.get(j).playerNumber + " (Points:" + players.get(j).points + "): ");
+            showTiles(players.get(j).playerTiles, true);
+        }
+        InputOutput.print("Pool: ");
+        showTiles(tilePool,true);
     }
 
     private void firstMove() {
@@ -294,7 +302,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         InputOutput.printLN();
     }
 
-    private void clearPlayerTiles(){
+    protected void clearPlayerTiles(){
         for (int i = 0; i < players.size(); i++) {
             players.get(i).playerTiles.clear();
         }

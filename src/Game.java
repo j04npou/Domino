@@ -18,8 +18,10 @@ public class Game {
         InputOutput.printLN("[2] - Domino Latino (Single)");
         InputOutput.printLN("[3] - Domino Venezonlano (Team)");
         InputOutput.printLN("[4] - Domino Venezolano (Single)");
+        InputOutput.printLN("[5] - Domino Mexicano (Team)");
+        InputOutput.printLN("[6] - Domino Mexicano (Single)");
         InputOutput.printLN("[0] - Exit Game");
-        String menu = InputOutput.input("01234");
+        String menu = InputOutput.input("0123456");
 
         DominoGame domino = null;
         switch (menu) {
@@ -37,15 +39,21 @@ public class Game {
                 InputOutput.printLN("Enter number of players 2-4:");
                 domino = new DominoVenezolano(InputOutput.numberOfPlayers(),false);
                 break;
+            case "5":
+                domino = new DominoMexicano(4,true);
+                break;
+            case "6":
+                InputOutput.printLN("Enter number of players 2-4:");
+                domino = new DominoMexicano(4,false);
+                break;
             case "0":
                 return false;
         }
-        if (domino != null)
+        if (domino != null) {
             domino.gameplay();
-        else
+            askForSerialize(domino);
+        } else
             InputOutput.printLN("⛔ Unexpected error. ⛔");
-
-        askForSerialize(domino);
 
         return true;
     }
@@ -67,7 +75,7 @@ public class Game {
     }
 
     private static void resumeGame() throws IOException, ClassNotFoundException {
-        DominoGame domino=null;
+        DominoGame domino;
         File f = new File("/tmp/save.dat");
         if(f.exists() && !f.isDirectory()) {
             InputOutput.printLN("Do you want to continue the saved game? (Y/N)");
