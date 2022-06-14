@@ -1,6 +1,8 @@
 package domino;
 
-public class Tile {
+import java.io.Serializable;
+
+public class Tile implements Serializable {
     private int tileDotsLeft;
     private int tileDotsRight;
     protected final String[][] tilesH = {
