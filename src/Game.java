@@ -20,8 +20,12 @@ public class Game {
         InputOutput.printLN("[4] - Domino Venezolano (Single)");
         InputOutput.printLN("[5] - Domino Mexicano (Team)");
         InputOutput.printLN("[6] - Domino Mexicano (Single)");
+        InputOutput.printLN("[7] - Domino Colombiano (Team)");
+        InputOutput.printLN("[8] - Domino Colombiano (Single)");
+        InputOutput.printLN("[9] - Domino Chileno (Team)");
+        InputOutput.printLN("[a] - Domino Chileno (Single)");
         InputOutput.printLN("[0] - Exit Game");
-        String menu = InputOutput.input("0123456");
+        String menu = InputOutput.input("0123456789A");
 
         DominoGame domino = null;
         switch (menu) {
@@ -45,6 +49,20 @@ public class Game {
             case "6":
                 InputOutput.printLN("Enter number of players 2-4:");
                 domino = new DominoMexicano(4,false);
+                break;
+            case "7":
+                domino = new DominoColombiano(4,true);
+                break;
+            case "8":
+                InputOutput.printLN("Enter number of players 2-4:");
+                domino = new DominoColombiano(InputOutput.numberOfPlayers(),false);
+                break;
+            case "9":
+                domino = new DominoClileno(4,true);
+                break;
+            case "A":
+                InputOutput.printLN("Enter number of players 2-4:");
+                domino = new DominoClileno(InputOutput.numberOfPlayers(),false);
                 break;
             case "0":
                 return false;

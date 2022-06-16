@@ -104,7 +104,7 @@ public abstract class DominoGame implements DominoGameInterface, Serializable {
         }
     }
 
-    private void showTeams() {
+    protected void showTeams() {
         if (isTeamGame) {
             displayTeams();
         } else {

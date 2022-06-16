@@ -43,7 +43,7 @@ public class InputOutput {
         String s;
         Scanner keys = new Scanner(System.in);
         do {
-            s = keys.next();
+            s = keys.next().toUpperCase();
         } while (!filter.contains(s) || s.length() != 1);
         return s;
     }

@@ -138,7 +138,7 @@ public class DominoMexicano extends DominoGame {
                             "Si hi ha empat a una tranca, guanya la parella \n" +
                             "o el jugador que te menys fitxes. Si empaten, ningú guanya el punts.\n" +
                             "Quan el mode de joc es individual i es guanya per tranca, els dos jugadors \n" +
-                            "del mateix equip sumaran el punts no jugats." +
+                            "del mateix equip sumaran el punts no jugats.\n" +
                             "El guanyador serà qui començarà la següent ma." );
     }
 
